@@ -1,9 +1,16 @@
 # POSS - Personal Object Sharing System
 
+## Demo
+https://demo.ge1.me  
+Email: demo  
+Password: demo  
+Reset: every hour
+
 ## Requirements
 * git (for installing/upgrading)
 * Python 3
 * virtualenv
+* MySQL Server
 
 ## Install
 **1)** Clone the project and checkout the latest tag
@@ -24,12 +31,12 @@ env\scripts\pip install -r requirements
 env/bin/pip install -r requirements
 ```
 
-**3)** Download GeoIP databse (optional)
+**3)** Download GeoIP databse (optional)  
 Download and extract "GeoLite Country" and "GeoLite Country IPv6" databases
-and put the files `GeoIP.dat` and `GeoIP.dat` them into the main directory.
+and put the files `GeoIP.dat` and `GeoIPv6.dat` into the main directory.
 http://dev.maxmind.com/geoip/legacy/geolite/
 
-**4)** Copy config.py.dist to config.py and modify as needed
+**4)** Copy config.py.dist to config.py and modify as needed. Note that POSS has only been tested with MySQL (5.5), everything else may not work.
 
 **5)** Set up the database
 ```
