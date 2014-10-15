@@ -36,7 +36,7 @@ Download and extract "GeoLite Country" and "GeoLite Country IPv6" databases
 and put the files `GeoIP.dat` and `GeoIPv6.dat` into the main directory.
 http://dev.maxmind.com/geoip/legacy/geolite/
 
-**4)** Copy config.py.dist to config.py and modify as needed. Note that POSS has only been tested with MySQL (5.5), everything else may not work.
+**4)** Copy config.dist.py to config.py and modify as needed. Note that POSS has only been tested with MySQL (5.5), everything else may not work.
 
 **5)** Set up the database
 ```
