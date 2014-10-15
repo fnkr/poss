@@ -1,0 +1,31 @@
+{% with callouts = get_flashed_messages(category_filter=['callout-danger']) %}
+    {% if callouts %}
+        {% for callout in callouts %}
+            <p class="bs-callout bs-callout-danger">{{ callout }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% with callouts = get_flashed_messages(category_filter=['callout-warning']) %}
+    {% if callouts %}
+        {% for callout in callouts %}
+            <p class="bs-callout bs-callout-warning">{{ callout }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% with callouts = get_flashed_messages(category_filter=['callout-info']) %}
+    {% if callouts %}
+        {% for callout in callouts %}
+            <p class="bs-callout bs-callout-info">{{ callout }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% with callouts = get_flashed_messages(category_filter=['callout-success']) %}
+    {% if callouts %}
+        {% for callout in callouts %}
+            <p class="bs-callout bs-callout-success">{{ callout }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}

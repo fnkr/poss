@@ -1,0 +1,88 @@
+{% extends "base_internal.html" %}
+
+{% block title %}
+    Account
+{% endblock %}
+
+{% with callouts = get_flashed_messages(category_filter=['callout-warning']) %}
+    {% if callouts %}
+        {% for callout in callouts %}
+            <p class="bs-callout bs-callout-warning">{{ callout }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% macro form_status(inputname) %}
+    {% if form[inputname][1] %}has-{{ form[inputname][1] }}{% endif %}
+{% endmacro %}
+
+{% macro form_message(inputname) %}
+    {% if form[inputname][1] %}
+        <label class="control-label" for="{{ inputname }}">{{ form[inputname][2] }}</label>
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+<legend>Profile</legend>
+<form role="form" method="post" action="{{ url_for('auth.account', custom_user_id=custom_user_id) if custom_user_id else url_for('auth.account') }}">
+    <div class="form-group {{ form_status('name') }}">
+        <label for="name">Name</label>
+        {{ form_message('name') }}
+        <input type="text" class="form-control" name="name" id="name" value="{{ form['name'][0] }}">
+    </div>
+    <div class="form-group  {{ form_status('email') }}">
+        <label for="email">Email address</label>
+        {{ form_message('email') }}
+        <input type="text" class="form-control" name="email" id="email" value="{{ form['email'][0] }}">
+    </div>
+    <div class="form-group  {{ form_status('password') }}">
+        <label for="password">Password</label>
+        {{ form_message('password') }}
+        <input type="password" class="form-control" name="password" id="password" placeholder="Do not change">
+    </div>
+    <button type="submit" class="btn btn-default">Save</button>
+</form>
+<br /><br />
+<legend>API Keys</legend>
+<form role="form" method="post" action="{{ url_for('auth.account', custom_user_id=custom_user_id) if custom_user_id else url_for('auth.account') }}">
+    <input type="hidden" class="form-control" name="task" value="user.apikeys.new">
+    <div class="input-group">
+        <input type="input" class="form-control" name="keyname" placeholder="Key name">
+        <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">Add</button>
+        </div>
+    </div>
+</form>
+{% if apikeys %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>API Key</th>
+            <th>Created</th>
+            <th>Last used</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for apikey in apikeys %}
+        <tr>
+            <td>{{ apikey.name }}</td>
+            <td>{{ apikey.key }}</td>
+            <td>{{ apikey.date_created }}</td>
+            <td>{{ apikey.last_used or 'Never' }}</td>
+            <td class="tasklist">
+                <form enctype="multipart/form-data" method="post" action="{{ url_for('auth.account') }}">
+                    <input type="hidden" name="apikey.id" value="{{ apikey.id }}"/>
+                    <input type="hidden" name="task" value="user.apikeys.delete"/>
+                    <button type="submit" class="btn btn-default">
+                        <i class="icon-trash"></i></a>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

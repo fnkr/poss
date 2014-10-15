@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ o.link }}{% endblock %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/type/image.min.css') }}" rel="stylesheet">
+    {% if request.headers.get('User-Agent', '').startswith('Twitterbot')  %}
+        <meta name="twitter:card" content="photo" />
+        <meta name="twitter:image" content="{{ url_for('objects.get_raw', oid=o.oid, _external=True) }}" />
+        <meta name="twitter:url" content="{{ url_for('objects.get', oid=o.oid, _external=True) }}" />
+    {% endif %}
+{% endblock %}
+
+{% block navbar_left %}
+	{% include 'objects/ressources/navbar_manage_links.html' %}
+{% endblock %}
+
+{% block navbar_right %}
+    {% include 'objects/ressources/navbar_direct_link.html' %}
+    {% include 'objects/ressources/navbar_download_link.html' %}
+{% endblock %}
+
+{% block content %}
+    <center><img alt="" id="image" src="{{ url_for('objects.get_raw', oid=o.oid) }}" onclick="c='navbar-hidden';e=document.body.classList;e.contains(c)?e.remove(c):e.add(c);"></center><br>
+{% endblock %}

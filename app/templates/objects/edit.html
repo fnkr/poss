@@ -1,0 +1,113 @@
+{% extends "base_internal.html" %}
+
+{% block title %}
+    Stats
+{% endblock %}
+
+{% with callouts = get_flashed_messages(category_filter=['callout-warning']) %}
+    {% if callouts %}
+        {% for callout in callouts %}
+            <p class="bs-callout bs-callout-warning">{{ callout }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% macro form_status(inputname) %}
+    {% if form[inputname][1] %}has-{{ form[inputname][1] }}{% endif %}
+{% endmacro %}
+
+{% macro form_message(inputname) %}
+    {% if form[inputname][1] %}
+        <label class="control-label" for="{{ inputname }}">{{ form[inputname][2] }}</label>
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+<span class="tasklist">
+<a href="{{ url_for('objects.edit', oid=o.oid) }}" class="btn btn-primary btn-lg active">
+    Values
+</a>
+<a href="{{ url_for('stats.overview', oid=o.oid) }}" class="btn btn-default btn-lg">
+    Stats
+</a>
+{% if not o.deleted %}
+<a href="{{ url_for('objects.get', oid=o.oid) }}" class="btn btn-default btn-lg">
+    View
+</a>
+<a href="{{ url_for('objects.delete', oid=o.oid) }}" class="btn btn-danger btn-lg btn-delete" role="button">
+    Delete
+</a>
+{% endif %}
+{% if o.type == 'file' and o.deleted %}
+<a href="{{ url_for('objects.upload', oid=o.oid) }}" class="btn btn-success btn-lg" {% if not o.deleted %}disabled{% endif %}>
+    Upload
+</a>
+<a href="{{ url_for('objects.paste', oid=o.oid) }}" class="btn btn-success btn-lg" {% if not o.deleted %}disabled{% endif %}>
+    Paste
+</a>
+<form role="form" method="post" action="{{ url_for('objects.edit', oid=o.oid) }}" style="float: right;">
+    <input type="hidden" name="task" value="object.convert"/>
+    <input type="hidden" name="type" value="link"/>
+    <button type="submit" class="btn btn-lg btn-warning">Convert to Link</button>
+</form>
+{% elif o.type == 'link' and o.deleted %}
+<form role="form" method="post" action="{{ url_for('objects.edit', oid=o.oid) }}" style="float: right;">
+    <input type="hidden" name="task" value="object.convert"/>
+    <input type="hidden" name="type" value="file"/>
+    <button type="submit" class="btn btn-lg btn-warning">Convert to File</button>
+</form>
+{% endif %}
+</span>
+
+<br/><br/><br/>
+
+<form method="post" action="{{ url_for('objects.edit', oid=o.oid) }}">
+    <input type="hidden" name="task" value="object.edit"/>
+    <div class="form-group">
+        <label for="url">URL</label>
+        <input type="text" class="form-control select-on-click" name="url" id="url" value="{{ url_for('objects.get', oid=o.oid, _external=True) }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="oid">Object ID</label>
+        <input type="text" class="form-control select-on-click" name="oid" id="oid" value="{{ form['oid'][0] }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="owner">Owner</label>
+        <input type="text" class="form-control" name="owner" id="owner" value="{{ form['owner'][0] }}" readonly>
+    </div>
+    <div class="form-group {{ form_status('title') }}">
+        <label for="title">Title</label>
+        {{ form_message('title') }}
+        <input type="text" class="form-control" name="title" id="title" value="{{ form['title'][0] }}">
+    </div>
+    <div class="form-group {{ form_status('link') }}">
+        <label for="link">Link / Filename</label>
+        {{ form_message('link') }}
+        <input type="text" class="form-control" name="link" id="link" value="{{ form['link'][0] }}">
+    </div>
+    <div class="form-group">
+        <label for="deleted">Deleted</label>
+        <input type="text" class="form-control" name="deleted" id="deleted" value="{{ form['deleted'][0] }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="deleted_reason">Reason for deletion</label>
+        <input type="text" class="form-control" name="deleted_reason" id="deleted_reason" value="{{ form['deleted_reason'][0] }}" readonly>
+    </div>
+    <div class="form-group {{ form_status('type') }}">
+        <label for="type">Type</label>
+        {{ form_message('type') }}
+        <input type="text" class="form-control" name="type" id="type" value="{{ form['type'][0] }}" readonly>
+    </div>
+    <div class="form-group">
+        <label for="size">Size</label>
+        <input type="text" class="form-control" name="size" id="size" value="{{ form['size'][0] }}" readonly>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">Save</button>
+</form>
+<br /><br />
+{% endblock %}
+
+{% block footer %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/edit.min.js') }}"></script>
+{% endblock %}

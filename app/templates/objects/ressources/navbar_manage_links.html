@@ -1,0 +1,17 @@
+{% if s.owner == o.id or s.role_admin %}
+    <li>
+        <a href="{{ url_for('stats.overview', oid=o.oid) }}">
+            <i class="icon-chart-bar"></i>&nbsp;Stats
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('objects.edit', oid=o.oid) }}">
+            <i class="icon-edit"></i>&nbsp;Edit
+        </a>
+    </li>
+    <li>
+        <a href="{{ url_for('objects.delete', oid=o.oid) }}" onclick="if(!confirm('Do you realy want to delete this item?')){return false;}">
+            <i class="icon-trash"></i>&nbsp;Delete
+        </a>
+    </li>
+{% endif %}

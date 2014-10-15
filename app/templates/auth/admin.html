@@ -1,0 +1,121 @@
+{% extends "base_internal.html" %}
+
+{% block title %}
+    Admin
+{% endblock %}
+
+{% with callouts = get_flashed_messages(category_filter=['callout-warning']) %}
+    {% if callouts %}
+        {% for callout in callouts %}
+            <p class="bs-callout bs-callout-warning">{{ callout }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+{% macro form_status(form, inputname) %}
+    {% if form[inputname][1] %}has-{{ form[inputname][1] }}{% endif %}
+{% endmacro %}
+
+{% macro form_message(form, inputname) %}
+    {% if form[inputname][1] %}
+        <label class="control-label" for="{{ inputname }}">{{ form[inputname][2] }}</label>
+    {% endif %}
+{% endmacro %}
+
+{% macro render_pagination(pagination, endpoint) %}
+    <div class="pagination">
+        {%- for page in pagination.iter_pages() %}
+            {% if page %}
+                {% if page != pagination.page %}
+                        <a href="{{ url_for(endpoint) }}?users.page={{ page }}">{{ page }}</a>
+                    {% else %}
+                        <strong>{{ page }}</strong>
+                    {% endif %}
+                {% else %}
+                <span class="ellipsis">&hellip;</span>
+            {% endif %}
+        {%- endfor %}
+    </div>
+{% endmacro %}
+
+{% block content %}
+<h2>Create User</h2>
+<form role="form" method="post" action="{{ url_for('auth.admin') }}">
+    <input type="hidden" name="task" value="user.create"/>
+    <div class="form-group {{ form_status(form_usercreate, 'name') }}">
+        <label for="name">Name</label>
+        {{ form_message(form_usercreate, 'name') }}
+        <input type="text" class="form-control" name="name" id="name" value="{{ form_usercreate['name'][0] }}">
+    </div>
+    <div class="form-group  {{ form_status(form_usercreate, 'email') }}">
+        <label for="email">Email address</label>
+        {{ form_message(form_usercreate, 'email') }}
+        <input type="text" class="form-control" name="email" id="email" value="{{ form_usercreate['email'][0] }}">
+    </div>
+    <div class="form-group  {{ form_status(form_usercreate, 'password') }}">
+        <label for="password">Password</label>
+        {{ form_message(form_usercreate, 'password') }}
+        <input type="password" class="form-control" name="password" id="password" value="{{ form_usercreate['password'][0] }}" placeholder="Do not change">
+    </div>
+    <button type="submit" class="btn btn-default">Add</button>
+</form>
+
+<h2>Users</h2>
+<table class="table table-hover" id="files-table">
+    <thead>
+        <tr>
+            <th>Enabled</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date created</th>
+            <th>Objects</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users.items %}
+        <tr>
+            <th>
+                {{ '<font color="green">Yes</font>'|safe if user.enabled else '<font color="red">No</font>'|safe }}
+            </th>
+            <th>{{ user.name }}</th>
+            <th>{{ user.email }}</th>
+            <th>{{ user.date_created }}</th>
+            <th>
+                {% if user.objects_count %}
+                    <a href="{{ url_for('objects.list') }}?term=user:{{ user.id }}">
+                        {{ user.objects_count }}
+                    </a>
+                {% else %}
+                    0
+                {% endif %}
+            </th>
+            <th class="tasklist">
+                <a class="btn btn-default" href="{{ url_for('auth.account', custom_user_id=user.id) }}">
+                    <i class="icon-edit"></i></a>
+                </a>
+                {% if session.get('user_id') != user.id %}
+                    <form enctype="multipart/form-data" method="post" action="{{ url_for('auth.admin') }}">
+                        <input type="hidden" name="user.id" value="{{ user.id }}"/>
+                        {% if user.enabled %}
+                            <input type="hidden" name="task" value="user.lock"/>
+                            <button type="submit" class="btn btn-default">
+                                <i class="icon-lock"></i></a>
+                            </button>
+                        {% else %}
+                            <input type="hidden" name="task" value="user.unlock"/>
+                            <button type="submit" class="btn btn-default">
+                                <i class="icon-lock-open"></i></a>
+                            </button>
+                        {% endif %}
+                    </form>
+                {% endif %}
+            </th>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% if users.has_prev or users.has_next %}
+    {{ render_pagination(users, 'auth.admin') }}
+{% endif %}
+{% endblock %}

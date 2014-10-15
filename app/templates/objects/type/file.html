@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ o.link }}{% endblock %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/type/file.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block navbar_left %}
+	{% include 'objects/ressources/navbar_manage_links.html' %}
+{% endblock %}
+
+{% block content %}
+    <div class="downloadbox">
+        <i class="icon-doc-inv"></i>
+        <br>
+        <b class="filename">{{ o.link }}</b>
+        <br><br>
+        <a class="btn btn-large btn-success" href="{{ url_for('objects.get_dl', oid=o.oid) }}">Download</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,43 @@
+Bootstrap
+=========
+
+http://getbootstrap.com/customize/
+
+Common CSS:
+	Tables
+	Forms
+	Buttons
+
+Components:
+	Input groups
+	Navs
+	Navbar
+	Pagination
+	Progress bars
+
+JavaScript components:
+	Dropdowns
+
+jQuery plugins:
+	Dropdowns
+
+Icons
+=====
+
+http://fontello.com
+
+Font Awesome:
+	chart-bar
+	database
+	doc-inv
+	download
+	edit
+	link
+	lock
+	lock-open
+	logout
+	paste
+	trash
+	upload-cloud
+	user
+	user-md

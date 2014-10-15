@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Sign in
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.min.css') }}">
+{% endblock %}
+
+{% block content %}
+    {% macro render_field(field) -%}
+        {% if form.autofocus == field.name and field.type != 'BooleanField' %}
+            {{ field(class_='form-control', autofocus='', **kwargs) }}
+        {% else %}
+            {% if field.type == 'BooleanField' %}
+                {{ field(**kwargs) }}
+            {% else %}
+                {{ field(class_='form-control', **kwargs) }}
+            {% endif %}
+        {% endif %}
+    {%- endmacro %}
+
+    <form class="form-signin" role="form" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <ul>
+            {% if form.errors %}
+                {% for field, error in form.errors.items() %}
+                    {% for e in error %}
+                        <li>
+                            {{ e }}
+                        </li>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+
+            {% with messages = get_flashed_messages(category_filter=['message/error']) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <li>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            {% with messages = get_flashed_messages(category_filter=['message/info']) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <li>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </ul>
+
+        {{ form.csrf_token }}
+
+        {{ render_field(form.email, placeholder=form.email.label.text) }}
+        {{ render_field(form.password, placeholder=form.password.label.text) }}
+        <div class="checkbox"><label>
+            {{ render_field(form.rememberme) }} {{ form.rememberme.label.text }}
+        </label></div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+{% endblock %}

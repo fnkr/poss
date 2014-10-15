@@ -1,0 +1,111 @@
+{% extends "base_internal.html" %}
+
+{% block title %}
+    Stats
+{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% macro is_current(pdatescope, pdaterange) %}{% if datescope == pdatescope and daterange == pdaterange %}{{ " " }}active{% endif %}{% endmacro %}
+
+{% block content %}
+    {% include('stats/navigation.html') %}
+    <br /><br /><br />
+
+    <span class="tasklist">
+        <a href="{{ url_for('stats.overview', oid=o.oid, scope='d', range='1w') }}"
+           class="btn btn-default {{ is_current('d', '1w') }}" role="button">
+            7 days
+        </a>
+        <a href="{{ url_for('stats.overview', oid=o.oid, scope='d', range='14d') }}"
+           class="btn btn-default {{ is_current('d', '14d') }}" role="button">
+            14 days
+        </a>
+        <a href="{{ url_for('stats.overview', oid=o.oid, scope='d', range='30d') }}"
+           class="btn btn-default {{ is_current('d', '30d') }}" role="button">
+            1 months
+        </a>
+        <a href="{{ url_for('stats.overview', oid=o.oid, scope='w', range='13w') }}"
+           class="btn btn-default {{ is_current('w', '13w') }}" role="button">
+            3 months
+        </a>
+        <a href="{{ url_for('stats.overview', oid=o.oid, scope='w', range='26w') }}"
+           class="btn btn-default {{ is_current('w', '26w') }}" role="button">
+            6 months
+        </a>
+        <a href="{{ url_for('stats.overview', oid=o.oid, scope='m', range='52w') }}"
+           class="btn btn-default {{ is_current('m', '52w') }}" role="button">
+            1 year
+        </a>
+        <a href="{{ url_for('stats.overview', oid=o.oid) }}"
+           class="btn btn-default {{ is_current('d', None) }}" role="button">
+            all time
+        </a>
+    </span>
+
+    <br /><br />
+{% if data['labels'] %}
+    <div>
+        <canvas id="chart" width="10px" height="3px"></canvas>
+    </div>
+
+<script>
+var data = {
+    labels: {{ data['labels']|safe }},
+    datasets: [
+        {
+            label: "Raw",
+            fillColor: "rgba(220,220,220,0.2)",
+            strokeColor: "rgba(220,220,220,1)",
+            pointColor: "rgba(220,220,220,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(220,220,220,1)",
+            data: {{ data['raw']|safe }}
+        },
+        {
+            label: "Page",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: {{ data['page']|safe }}
+        },
+        {
+            label: "Download",
+            fillColor: "rgba(147,236,30,0.2)",
+            strokeColor: "rgb(99,224,36)",
+            pointColor: "rgb(99,224,36)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgb(99, 224, 36)",
+            data: {{ data['download']|safe }}
+        },
+        {
+            label: "Redirect",
+            fillColor: "rgba(151,187,205,0.2)",
+            strokeColor: "rgba(151,187,205,1)",
+            pointColor: "rgba(151,187,205,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#fff",
+            pointHighlightStroke: "rgba(151,187,205,1)",
+            data: {{ data['redirect']|safe }}
+        }
+    ]
+};
+</script>
+{% else %}
+    <p class="bs-callout bs-callout-info">No data for this object.</p>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/stats/chart.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/stats/overview.min.js') }}"></script>
+{% endblock %}

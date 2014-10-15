@@ -1,0 +1,61 @@
+{% extends "base_internal.html" %}
+
+{% block title %}
+    Paste
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/paste.min.css') }}">
+{% endblock %}
+
+{% block content %}
+<form enctype="multipart/form-data" method="post" action="{{ url_for('objects.paste', oid=oid) }}">
+    <textarea name="paste" id="paste-input" rows="20" class="form-control"></textarea>
+    <table class="table" id="paste-options">
+        <thead></thead>
+        <tbody>
+            <tr>
+                <th rowspan="2" id="paste-submit-th">
+                    <button type="submit" class="btn btn-success btn-lg btn-block" id="paste-submit">Paste</button>
+                </th>
+                <th>Filename or Extension (e.g. "py" for Python)</th>
+                <!-- <th>Expiry</th> -->
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" name="filename" class="form-control" maxlength="64" value="txt" />
+                </td>
+<!--                     <td>
+                    <select id="expire_type" name="expire_type">
+                        <option value="manually" selected>Manually</option>
+                        <option value="viewer">By viewer</option>
+                        <option value="view">On view</option>
+                        <option value="time">Time</option>
+                    </select>
+
+                    <span id="expire_view" style="display: none;">
+                        <input type="text" name="expire_view_value" size="7" maxlength="7" value="1"/> view(s)
+                    </span>
+
+                    <span id="expire_time" style="display: none;">
+                        <input type="text" name="expire_time_value" size="2" maxlength="2" value="1" />
+                        <select name="expire_time_category">
+                            <option value="minute">Minute(s)</option>
+                            <option value="hour">Hour(s)</option>
+                            <option value="day" selected>Day(s)</option>
+                            <option value="week">Week(s)</option>
+                            <option value="month">Month(s)</option>
+                            <option value="year">Year(s)</option>
+                        </select>
+                    </span>
+                </td> -->
+            </tr>
+        </tbody>
+    </table>
+</form>
+{% endblock %}
+
+{% block footer %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/paste.min.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block head_ %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/member.min.css') }}">
+{% endblock %}
+
+{% block navbar_left %}
+    <li><a href="{{ url_for('objects.list') }}"><i class="icon-database"></i> Objects</a></li>
+    <li><a href="{{ url_for('objects.upload') }}"><i class="icon-upload-cloud"></i> Upload</a></li>
+    <li><a href="{{ url_for('objects.paste') }}"><i class="icon-paste"></i> Paste</a></li>
+    <li>
+        <form enctype="multipart/form-data" method="post" action="{{ url_for('objects.link') }}">
+            <input
+                id="link"
+                type="text"
+                name="link"
+                size="20"
+                placeholder="Link"
+                class="form-control newlinkbox"
+            />
+        </form>
+    </li>
+{% endblock %}
+
+{% block navbar_right %}
+    <li><a href="{{ url_for('auth.account') }}"><i class="icon-user"></i> Account</a></li>
+    {% if s.role_admin %}
+        <li><a href="{{ url_for('auth.admin') }}"><i class="icon-user-md"></i> Admin</a></li>
+    {% endif %}
+    <li><a href="{{ url_for('auth.logout') }}"><i class="icon-logout"></i> Logout</a></li>
+{% endblock %}

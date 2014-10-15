@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ o.link }}{% endblock %}
+
+{% block navbar_left %}
+    {% include 'objects/ressources/navbar_manage_links.html' %}
+{% endblock %}
+
+{% block navbar_right %}
+	{% include 'objects/ressources/navbar_direct_link.html' %}
+    {% include 'objects/ressources/navbar_download_link.html' %}
+{% endblock %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/type/code.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+{{ code|safe  }}
+{% endblock %}

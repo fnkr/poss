@@ -1,0 +1,135 @@
+{% extends "base_internal.html" %}
+
+{% block title %}
+    Objects
+{% endblock %}
+
+{% macro render_pagination(pagination, endpoint, term) %}
+    <div class="pagination">
+        {%- for page in pagination.iter_pages() %}
+            {% if page %}
+                {% if page != pagination.page %}
+                        <a href="{{ url_for(endpoint) }}?{% if term %}term={{ term|urlencode }}&{% endif %}page={{ page }}">{{ page }}</a>
+                    {% else %}
+                        <strong>{{ page }}</strong>
+                    {% endif %}
+                {% else %}
+                <span class="ellipsis">&hellip;</span>
+            {% endif %}
+        {%- endfor %}
+    </div>
+{% endmacro %}
+
+{% block content %}
+<form enctype="multipart/form-data" method="get" action="{{ url_for('objects.list') }}">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input
+                    id="term"
+                    type="text"
+                    name="term"
+                    size="20"
+                    maxlength="64"
+                    value="{{ term or '' }}"
+                    placeholder="Search"
+                    autocomplete="off"
+                    style="width: 100%"
+                    class="form-control"
+                />
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        Insert
+                    <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li>&nbsp;Filter by</li>
+                        <li><a href="javascript:;" id="filter_str">
+                            title / link / filename / object id
+                        </a></li>
+                        <li><a href="javascript:;" id="filter_views">
+                            views
+                        </a></li>
+                        <li class="divider"></li>
+                        <li>&nbsp;Order by</li>
+                        <li><a href="javascript:;" id="order_created">
+                            created
+                        </a></li>
+                        <li><a href="javascript:;" id="order_modified">
+                            modified
+                        </a></li>
+                        <li><a href="javascript:;" id="order_views">
+                            views
+                        </a></li>
+                        <li><a href="javascript:;" id="order_lastview">
+                            last view
+                        </a></li>
+                        <li><a href="javascript:;" id="order_size">
+                            size
+                        </a></li>
+                        <li class="divider"></li>
+                        <li>&nbsp;is</li>
+                        <li><a href="javascript:;" id="is_file">
+                            file
+                        </a></li>
+                        <li><a href="javascript:;" id="is_link">
+                            link
+                        </a></li>
+                        <li><a href="javascript:;" id="is_deleted">
+                            deleted
+                        </a></li>
+                        <li><a href="javascript:;" id="is_notdeleted">
+                            not deleted
+                        </a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<table class="table table-hover" id="files-table">
+    <thead>
+        <tr>
+            <th>Object</th>
+            <th>Name or Link</th>
+            <th>Size</th>
+            <th>Created</th>
+            <th>Views</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    	{% for object in data.items %}
+        <tr>
+            <td>
+                <a href="{{ url_for('objects.get', oid=object.oid, _external=True) }}">
+            		{{ url_for('objects.get', oid=object.oid) }}
+            	</a>
+            </td>
+            <td>
+                {{ object.title or object.link or ''|urlize }}
+            </td>
+            <td>{{ human_readable_size(object.size) }}</td>
+            <td>{{ object.date_created }}</td>
+            <td>{{ object.viewcount }}</td>
+            <td>
+                <a href="{{ url_for('stats.overview', oid=object.oid) }}" class="btn btn-default"><i class="icon-chart-bar"></i></a>
+                <a href="{{ url_for('objects.edit', oid=object.oid) }}" class="btn btn-default"><i class="icon-edit"></i></a>
+                {% if not object.deleted %}
+                    <a href="{{ url_for('objects.delete', oid=object.oid) }}" class="btn btn-default btn-delete"><i class="icon-trash"></i></a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% if data.has_prev or data.has_next %}
+    {{ render_pagination(data, 'objects.list', term) }}
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/objects.min.js') }}"></script>
+{% endblock %}

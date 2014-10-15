@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %} - {{ config['APP_NAME'] }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontello.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.min.css') }}">
+
+    {% block head_ %}{% endblock %}
+    {% block head %}{% endblock %}
+
+    <!--[if lt IE 9]>
+        <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+    <![endif]-->
+
+    <style type="text/css">
+        {% block styles %}{% endblock %}
+    </style>
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top">
+    <ul class="nav navbar-nav pull-left">
+        {% block navbar_left %}{% endblock %}
+    </ul>
+
+    <ul class="nav navbar-nav pull-right">
+        {% block navbar_right %}{% endblock %}
+    </ul>
+</div>
+
+<div class="container-fluid">
+    {% include('callouts.html') %}
+    {% block content %}{% endblock %}
+</div>
+
+{% block footer %}{% endblock %}
+</body>
+</html>

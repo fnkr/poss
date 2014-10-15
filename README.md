@@ -1,0 +1,86 @@
+# POSS - Personal Object Sharing System
+
+## Requirements
+* git (for installing/upgrading)
+* Python 3
+* virtualenv
+
+## Install
+**1)** Clone the project and checkout the latest tag
+```
+git clone https://github.com/fnkr/POSS.git
+git checkout 1.0
+cd poss
+```
+
+**2)** Set up your environment
+```
+virtualenv env
+
+# Windows
+env\scripts\pip install -r requirements
+
+# Linux
+env/bin/pip install -r requirements
+```
+
+**3)** Download GeoIP databse (optional)
+Download and extract "GeoLite Country" and "GeoLite Country IPv6" databases
+and put the files `GeoIP.dat` and `GeoIP.dat` them into the main directory.
+http://dev.maxmind.com/geoip/legacy/geolite/
+
+**4)** Copy config.py.dist to config.py and modify as needed
+
+**5)** Set up the database
+```
+# Windows
+env\scripts\python manage.py db upgrade
+
+# Linux
+env/bin/python manage.py db upgrade
+```
+
+**6)** Run the server
+```
+# Windows
+env\scripts\python manage.py runserver
+
+# Linux
+env/bin/python manage.py runserver
+```
+
+## Upgrade
+
+**1)** Fetch and checkout the latest tag
+```
+git fetch --tags
+git checkout 1.0
+```
+
+**2)** Migrate the database
+```
+# Windows
+env\scripts\python manage.py db upgrade
+
+# Linux
+env/bin/python manage.py db upgrade
+```
+
+## Development notes
+**-** Run the server in development mode
+```
+# Windows
+env\scripts\python manage.py runserver --debug
+
+# Linux
+env/bin/python manage.py runserver --debug
+```
+
+**-** Create a migration after you changed the database
+```
+# Windows
+env\scripts\python manage.py db migrate -m "comment"
+
+# Linux
+env/bin/python manage.py db migrate -m "comment"
+```

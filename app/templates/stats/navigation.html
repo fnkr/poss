@@ -1,0 +1,29 @@
+<span class="tasklist">
+    <a href="{{ url_for('stats.overview', oid=o.oid) }}"
+       class="btn btn-primary btn-lg {% if request.endpoint == 'stats.overview' %}{{ " " }}active{% endif %}"
+    role="button">
+        Overview
+    </a>
+    <a href="{{ url_for('stats.traffic_locations', oid=o.oid) }}"
+       class="btn btn-default btn-lg {% if request.endpoint == 'stats.traffic_locations' %}{{ " " }}active{% endif %}"
+    role="button">
+        Traffic locations
+    </a>
+    <a href="{{ url_for('stats.traffic_sources', oid=o.oid) }}"
+       class="btn btn-default btn-lg {% if request.endpoint == 'stats.traffic_sources' %}{{ " " }}active{% endif %}"
+    role="button">
+        Traffic sources
+    </a>
+    <a href="{{ url_for('stats.traffic_settings', oid=o.oid) }}"
+       class="btn btn-default btn-lg {% if request.endpoint == 'stats.traffic_settings' %}{{ " " }}active{% endif %}"
+    role="button">
+        Traffic settings
+    </a>
+    <a href="{{ url_for('objects.edit', oid=o.oid) }}"
+       class="btn btn-default btn-lg " role="button">
+        Edit
+    </a>
+    <a href="{{ url_for('objects.get', oid=o.oid) }}" class="btn btn-default btn-lg">
+        View
+    </a>
+</span>
