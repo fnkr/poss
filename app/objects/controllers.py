@@ -299,7 +299,7 @@ def link():
     except InvalidLinkException:
         flash('This is no valid URL.', 'callout-danger')
 
-    return redirect(url_for('objects.list'))
+    return redirect(url_for('objects.edit', oid=o.oid))
 
 
 # Edit object
