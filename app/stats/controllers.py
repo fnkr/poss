@@ -1,6 +1,6 @@
 # Utils
 import datetime
-from libs.pytimeparse.timeparse import timeparse
+from utils.pytimeparse.timeparse import timeparse
 
 # Flask
 from flask import abort

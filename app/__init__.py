@@ -23,7 +23,7 @@ app.config.from_object(config)
 
 if not app.config['DEBUG']:
     app.jinja_env.auto_reload = False
-    # app.jinja_env.add_extension('libs.jinja2htmlcompress.HTMLCompress')
+    # app.jinja_env.add_extension('utils.jinja2htmlcompress.HTMLCompress')
 
 
 # Define the database object and Base model which
