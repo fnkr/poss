@@ -1,6 +1,6 @@
 # Import the database object (db) from the main application module
 from app import db, Base
-from .utils import country_code as country_code_from_ip
+from .utils import country_code
 from utils.get_or_insert import get_or_insert
 
 class View(Base):
@@ -16,9 +16,7 @@ class View(Base):
 
     # Viewer
     ip = db.Column(db.String(39))
-    country_code = db.Column(db.Integer, db.ForeignKey('country_code.id',
-                                                       ondelete='CASCADE',
-                                                       onupdate='CASCADE'))
+    country_code = db.Column(db.String(2))
     referrer = db.Column(db.Integer, db.ForeignKey('referrer.id',
                                                    ondelete='CASCADE',
                                                    onupdate='CASCADE'))
@@ -26,16 +24,12 @@ class View(Base):
                                                      ondelete='CASCADE',
                                                      onupdate='CASCADE'))
 
+
     def __init__(self, object, type, ip, referrer, user_agent):
         self.object = object
         self.type = type
         self.ip = ip
-
-        country_code = country_code_from_ip(ip)
-        if country_code:
-            self.country_code = get_or_insert(CountryCode, CountryCode.country_code, country_code).id
-        else:
-            self.country_code = None
+        self.country_code = country_code(ip)
 
         if referrer:
             self.referrer = get_or_insert(Referrer, Referrer.referrer, referrer).id
@@ -50,18 +44,6 @@ class View(Base):
 
     def __repr__(self):
         return '<View %s/%s>' % (self.object, self.type)
-
-
-class CountryCode(Base):
-    __tablename__ = 'country_code'
-
-    country_code = db.Column(db.String(2), nullable=True, unique=True)
-
-    def __init__(self, country_code):
-        self.country_code = country_code
-
-    def __repr__(self):
-        return '<country_code %s>' % (self.country_code)
 
 
 class Referrer(Base):
