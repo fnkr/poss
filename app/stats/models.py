@@ -1,6 +1,6 @@
 # Import the database object (db) from the main application module
 from app import db, Base
-from .utils import country_code
+from .utils import country_code as country_code_from_ip
 from utils.get_or_insert import get_or_insert
 
 class View(Base):
@@ -30,9 +30,23 @@ class View(Base):
         self.object = object
         self.type = type
         self.ip = ip
-        self.country_code = get_or_insert(CountryCode, CountryCode.country_code, country_code(ip)).id
-        self.referrer = get_or_insert(Referrer, Referrer.referrer, referrer).id
-        self.user_agent = get_or_insert(UserAgent, UserAgent.user_agent, user_agent).id
+
+        country_code = country_code_from_ip(ip)
+        if country_code:
+            self.country_code = get_or_insert(CountryCode, CountryCode.country_code, country_code).id
+        else:
+            self.country_code = None
+
+        if referrer:
+            self.referrer = get_or_insert(Referrer, Referrer.referrer, referrer).id
+        else:
+            self.referrer = None
+
+        if user_agent:
+            self.user_agent = get_or_insert(UserAgent, UserAgent.user_agent, user_agent).id
+        else:
+            self.user_agent = None
+
 
     def __repr__(self):
         return '<View %s/%s>' % (self.object, self.type)
