@@ -1,6 +1,7 @@
 # Import the database object (db) from the main application module
 from app import db, Base
 from .utils import country_code
+from utils.get_or_insert import get_or_insert
 
 class View(Base):
     __tablename__ = 'view'
@@ -15,19 +16,59 @@ class View(Base):
 
     # Viewer
     ip = db.Column(db.String(39))
-    country_code = db.Column(db.String(2))
-    referrer = db.Column(db.String(255))
-    user_agent = db.Column(db.String(255))
+    country_code = db.Column(db.Integer, db.ForeignKey('country_code.id',
+                                                       ondelete='CASCADE',
+                                                       onupdate='CASCADE'))
+    referrer = db.Column(db.Integer, db.ForeignKey('referrer.id',
+                                                   ondelete='CASCADE',
+                                                   onupdate='CASCADE'))
+    user_agent = db.Column(db.Integer, db.ForeignKey('user_agent.id',
+                                                     ondelete='CASCADE',
+                                                     onupdate='CASCADE'))
 
-    # New instance instantiation procedure
     def __init__(self, object, type, ip, referrer, user_agent):
-
         self.object = object
         self.type = type
         self.ip = ip
-        self.country_code = country_code(ip)
-        self.referrer = referrer
-        self.user_agent = user_agent
+        self.country_code = get_or_insert(CountryCode, CountryCode.country_code, country_code(ip)).id
+        self.referrer = get_or_insert(Referrer, Referrer.referrer, referrer).id
+        self.user_agent = get_or_insert(UserAgent, UserAgent.user_agent, user_agent).id
 
     def __repr__(self):
         return '<View %s/%s>' % (self.object, self.type)
+
+
+class CountryCode(Base):
+    __tablename__ = 'country_code'
+
+    country_code = db.Column(db.String(2), nullable=True, unique=True)
+
+    def __init__(self, country_code):
+        self.country_code = country_code
+
+    def __repr__(self):
+        return '<country_code %s>' % (self.country_code)
+
+
+class Referrer(Base):
+    __tablename__ = 'referrer'
+
+    referrer = db.Column(db.String(255), nullable=True, unique=True)
+
+    def __init__(self, referrer):
+        self.referrer = referrer
+
+    def __repr__(self):
+        return '<referrer "%s">' % (self.referrer)
+
+
+class UserAgent(Base):
+    __tablename__ = 'user_agent'
+
+    user_agent = db.Column(db.String(255), nullable=True, unique=True)
+
+    def __init__(self, user_agent):
+        self.user_agent = user_agent
+
+    def __repr__(self):
+        return '<user_agent "%s">' % (self.user_agent)
