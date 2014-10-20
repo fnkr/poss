@@ -14,4 +14,9 @@ if __name__ == '__main__':
         "Start server"
         app.run(host=host, port=port, debug=debug)
 
+    @manager.command
+    def maintenance():
+        from app.maintenance import maintenance
+        maintenance()
+
     manager.run()
