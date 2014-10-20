@@ -76,7 +76,7 @@ class Object(Base):
 
     # Lifecycle
     deleted = db.Column(db.Boolean, nullable=False, default=False)
-    deleted_reason = db.Column(db.Enum('user', 'admin', 'autodelete'), nullable=True)
+    deleted_reason = db.Column(db.Enum('user', 'admin', 'autodelete', 'system'), nullable=True)
     autodelete_type = db.Column(db.Enum('on_view', 'by_viewer', 'at_time'), nullable=True)
     autodelete_param = db.Column(db.Integer, nullable=True)
 
