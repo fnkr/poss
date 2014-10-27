@@ -101,7 +101,7 @@ def logout():
 
 @app.route('/account', methods=['GET', 'POST'])
 @app.route('/account/<custom_user_id>', methods=['GET', 'POST'])
-def account(custom_user_id=False):
+def account(custom_user_id=None):
     if custom_user_id:
         s = session_to_user(request, session, user_id=custom_user_id, or_admin=True)
         if s.auth_error: return auth_error_return_helper(s)

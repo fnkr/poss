@@ -24,7 +24,7 @@
 
 {% block content %}
 <legend>Profile</legend>
-<form role="form" method="post" action="{{ url_for('auth.account', custom_user_id=custom_user_id) if custom_user_id else url_for('auth.account') }}">
+<form role="form" method="post" action="{{ url_for('auth.account', custom_user_id=custom_user_id) }}">
     <div class="form-group {{ form_status('name') }}">
         <label for="name">Name</label>
         {{ form_message('name') }}
@@ -44,7 +44,7 @@
 </form>
 <br /><br />
 <legend>API Keys</legend>
-<form role="form" method="post" action="{{ url_for('auth.account', custom_user_id=custom_user_id) if custom_user_id else url_for('auth.account') }}">
+<form role="form" method="post" action="{{ url_for('auth.account', custom_user_id=custom_user_id) }}">
     <input type="hidden" class="form-control" name="task" value="user.apikeys.new">
     <div class="input-group">
         <input type="input" class="form-control" name="keyname" placeholder="Key name">
@@ -72,7 +72,7 @@
             <td>{{ apikey.date_created }}</td>
             <td>{{ apikey.last_used or 'Never' }}</td>
             <td class="tasklist">
-                <form enctype="multipart/form-data" method="post" action="{{ url_for('auth.account') }}">
+                <form enctype="multipart/form-data" method="post" action="{{ url_for('auth.account', custom_user_id=custom_user_id) }}">
                     <input type="hidden" name="apikey.id" value="{{ apikey.id }}"/>
                     <input type="hidden" name="task" value="user.apikeys.delete"/>
                     <button type="submit" class="btn btn-default">
