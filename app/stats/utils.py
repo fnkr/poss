@@ -1,5 +1,6 @@
 # Python Utils
 import os.path
+from datetime import datetime, date, timedelta
 
 # PyGeoIP
 import pygeoip
@@ -48,3 +49,27 @@ def country_code(ip):
             pass
 
     return None
+
+
+def missing_duplicated_dates_helper(strings, dateformat, start):
+    if len(strings) == 0:
+        return strings
+
+    # format strings to dates
+    dates = [datetime.strptime(string, dateformat) for string in strings]
+    dates.append(start)
+    dates.sort()
+
+    # find missing dates and append them
+    [dates.append(date) for date in set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))]
+
+    # format dates back to strings
+    strings = [datetime.strftime(date, dateformat) for date in dates]
+
+    # remove duplicates
+    strings = list(set(strings))
+
+    # sort
+    strings.sort()
+
+    return strings

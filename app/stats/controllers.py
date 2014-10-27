@@ -20,6 +20,9 @@ from app.auth.utils import auth_error_return_helper
 from .models import View
 from app.objects.models import Object
 
+# POSS Utils
+from .utils import missing_duplicated_dates_helper
+
 # Define the blueprint
 app = Blueprint('stats', __name__)
 
@@ -32,62 +35,74 @@ def overview(oid):
     s = session_to_user(request, session, user_id=o.owner, or_admin=True)
     if s.auth_error: return auth_error_return_helper(s)
 
+    # daterange & datescope
     daterange = timeparse(request.args.get('range', ''))
     datescope = request.args.get('scope', None)
 
     if type(daterange) == int:
-        timedelta = datetime.timedelta(seconds=daterange)
+        datestart = datetime.datetime.now() - datetime.timedelta(seconds=daterange)
     else:
-        timedelta = None
+        datestart = o.date_created
 
     if datescope not in ('y', 'm', 'w', 'd'):
         datescope = 'd'
 
-    data = {
-        'page': {},
-        'raw': {},
-        'download': {},
-        'redirect': {},
-        'labels': []
-    }
+    # prepare dataset
+    data = { 'labels': [] }
+    for viewtype in View.type.type.enums:
+        data[viewtype] = {}
 
+    # fetch data from db
     q = db.session
     qc = [View.type, db.func.count('*').label('count'), db.extract('year', View.date_created).label('_year')]
     qg = ['type']
     # http://www.w3schools.com/sql/func_extract.asp
-    if datescope in ('m', 'd'):
+    if datescope in ('m', 'w', 'd'):
         qc.append(db.func.LPAD(db.extract('month', View.date_created), 2, '0').label('_month'))
         qg.append('_month')
-    if datescope == 'w':
-        qc.append(db.func.LPAD(db.extract('week', View.date_created), 2, '0').label('_week'))
-        qg.append('_week')
-    if datescope == 'd':
+    if datescope in ('w', 'd'):
         qc.append(db.func.LPAD(db.extract('day', View.date_created), 2, '0').label('_day'))
         qg.append('_day')
-
     q = q.query(*qc)
     q = q.group_by(*qg)
     q = q.filter_by(object=o.id)
-    if timedelta:
-        q = q.filter(View.date_created > datetime.datetime.now() - timedelta)
+    q = q.filter(View.date_created >= datestart)
     q = q.all()
 
+    # prepare labels
     for value in q:
         # value: TYPE, COUNT, YEAR, [MONTH,] [WEEK|DAY]
         if datescope == 'y':
             label = value[2]
-        elif datescope in ('m', 'w'):
+        elif datescope == 'm':
             label = '%s-%s' % (value[2], value[3])
-        elif datescope == 'd':
+        elif datescope in ('w', 'd'):
             label = '%s-%s-%s' % (value[2], value[3], value[4])
 
         data[value[0]][label] = value[1]
         data['labels'].append(label)
 
-    data['labels'] = list(set(data['labels']))
-    data['labels'].sort()
+    # add dates without views to labels
+    if datescope in ('y', 'm'):
+        data['labels'] = missing_duplicated_dates_helper(data['labels'], '%Y-%m', datestart)
+    elif datescope in ('w', 'd'):
+        data['labels'] = missing_duplicated_dates_helper(data['labels'], '%Y-%m-%d', datestart)
 
-    # return ''
+    # make dict to list
+    for viewtype in View.type.type.enums:
+        newData = []
+        for date in data['labels']:
+            try:
+                newData.append(data[viewtype][date])
+            except KeyError:
+                newData.append(0)
+
+        # empty dict if there is no view for that viewtype at all
+        if all(x == 0 for x in newData):
+            newData = []
+        else:
+            data[viewtype] = newData
+
     return render_template('stats/overview.html', o=o, s=s,
                            data=data,
                            datescope=datescope,

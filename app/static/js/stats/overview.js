@@ -1,7 +1,12 @@
 var ctx = $("#chart").get(0).getContext("2d");
 
 if (data.labels.length == 1) {
-    var chart = new Chart(ctx).Bar(data);
-} else {
-    var chart = new Chart(ctx).Line(data);
+    data.labels.unshift(0);
+    for (i = 0; i < data.datasets.length; i++) {
+        try {
+            data.datasets[i].data.unshift(0);
+        } catch(e) {
+        }
+    }
 }
+var chart = new Chart(ctx).Line(data);

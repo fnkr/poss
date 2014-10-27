@@ -31,8 +31,8 @@
            class="btn btn-default {{ is_current('w', '13w') }}" role="button">
             3 months
         </a>
-        <a href="{{ url_for('stats.overview', oid=o.oid, scope='w', range='26w') }}"
-           class="btn btn-default {{ is_current('w', '26w') }}" role="button">
+        <a href="{{ url_for('stats.overview', oid=o.oid, scope='m', range='26w') }}"
+           class="btn btn-default {{ is_current('m', '26w') }}" role="button">
             6 months
         </a>
         <a href="{{ url_for('stats.overview', oid=o.oid, scope='m', range='52w') }}"
