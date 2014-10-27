@@ -201,7 +201,7 @@ def admin():
             elif not valid_email(email):
                 form_usercreate['email'] = [email, 'error', 'email is syntactically incorrect']
                 error = True
-            elif User.query.filter(name == name).first():
+            elif User.query.filter(User.email == email).first():
                 form_usercreate['email'] = [name, 'error', 'there is already a user with this email']
                 error = True
 
