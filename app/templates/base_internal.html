@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block head_ %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/member.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/member.min.css', v=config['APP_VERSION']) }}">
 {% endblock %}
 
 {% block navbar_left %}

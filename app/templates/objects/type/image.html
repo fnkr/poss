@@ -3,7 +3,7 @@
 {% block title %}{{ o.link }}{% endblock %}
 
 {% block head %}
-    <link href="{{ url_for('static', filename='css/type/image.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/type/image.min.css', v=config['APP_VERSION']) }}" rel="stylesheet">
     {% if request.headers.get('User-Agent', '').startswith('Twitterbot')  %}
         <meta name="twitter:card" content="photo" />
         <meta name="twitter:image" content="{{ url_for('objects.get_raw', oid=o.oid, _external=True) }}" />

@@ -5,15 +5,15 @@
     <title>{% block title %}{% endblock %} - {{ config['APP_NAME'] }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontello.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css', v=config['APP_VERSION']) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/fontello.min.css', v=config['APP_VERSION']) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/general.min.css', v=config['APP_VERSION']) }}">
 
     {% block head_ %}{% endblock %}
     {% block head %}{% endblock %}
 
     <!--[if lt IE 9]>
-        <script src="{{ url_for('static', filename='js/html5shiv.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/html5shiv.min.js', v=config['APP_VERSION']) }}"></script>
     <![endif]-->
 
     <style type="text/css">

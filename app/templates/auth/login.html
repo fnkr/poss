@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.min.css', v=config['APP_VERSION']) }}">
 {% endblock %}
 
 {% block content %}

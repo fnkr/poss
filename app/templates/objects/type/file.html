@@ -3,7 +3,7 @@
 {% block title %}{{ o.link }}{% endblock %}
 
 {% block head %}
-    <link href="{{ url_for('static', filename='css/type/file.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/type/file.min.css', v=config['APP_VERSION']) }}" rel="stylesheet">
 {% endblock %}
 
 {% block navbar_left %}
