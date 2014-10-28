@@ -8,41 +8,44 @@
 
 {% endblock %}
 
-{% macro is_current(pdatescope, pdaterange) %}{% if datescope == pdatescope and daterange == pdaterange %}{{ " " }}active{% endif %}{% endmacro %}
+{% macro is_current(key, value) %}
+    {% if request.args.get(key) == value %}
+        active
+    {% endif %}
+{% endmacro %}
+
+{% macro make_range_btn(value, title) %}
+    <a href="{{ url_for('stats.overview', oid=o.oid, range=value, scope=request.args.get('scope')) }}"
+       class="btn btn-default {{ is_current('range', value) }}" role="button">
+        {{ title }}
+    </a>
+{% endmacro %}
+
+{% macro make_scope_btn(value, title) %}
+    <a href="{{ url_for('stats.overview', oid=o.oid, range=request.args.get('range'), scope=value) }}"
+       class="btn btn-default {{ is_current('scope', value) }}" role="button">
+        {{ title }}
+    </a>
+{% endmacro %}
 
 {% block content %}
     {% include('stats/navigation.html') %}
     <br /><br /><br />
 
     <span class="tasklist">
-        <a href="{{ url_for('stats.overview', oid=o.oid, scope='d', range='1w') }}"
-           class="btn btn-default {{ is_current('d', '1w') }}" role="button">
-            7 days
-        </a>
-        <a href="{{ url_for('stats.overview', oid=o.oid, scope='d', range='14d') }}"
-           class="btn btn-default {{ is_current('d', '14d') }}" role="button">
-            14 days
-        </a>
-        <a href="{{ url_for('stats.overview', oid=o.oid, scope='d', range='30d') }}"
-           class="btn btn-default {{ is_current('d', '30d') }}" role="button">
-            1 months
-        </a>
-        <a href="{{ url_for('stats.overview', oid=o.oid, scope='w', range='13w') }}"
-           class="btn btn-default {{ is_current('w', '13w') }}" role="button">
-            3 months
-        </a>
-        <a href="{{ url_for('stats.overview', oid=o.oid, scope='m', range='26w') }}"
-           class="btn btn-default {{ is_current('m', '26w') }}" role="button">
-            6 months
-        </a>
-        <a href="{{ url_for('stats.overview', oid=o.oid, scope='m', range='52w') }}"
-           class="btn btn-default {{ is_current('m', '52w') }}" role="button">
-            1 year
-        </a>
-        <a href="{{ url_for('stats.overview', oid=o.oid) }}"
-           class="btn btn-default {{ is_current('d', None) }}" role="button">
-            all time
-        </a>
+        {{ make_range_btn('7d', '7 days') }}
+        {{ make_range_btn('14d', '14 days') }}
+        {{ make_range_btn('30d', '30 days') }}
+        {{ make_range_btn('13w', '3 months') }}
+        {{ make_range_btn('26w', '6 months') }}
+        {{ make_range_btn('52w', '1 year') }}
+        {{ make_range_btn(None, 'all time') }}
+
+        {{ make_scope_btn('d', 'days') }}
+        <!-- {{ make_scope_btn('w', 'weeks') }} -->
+        {{ make_scope_btn('m', 'months') }}
+        {{ make_scope_btn('y', 'years') }}
+        {{ make_scope_btn(None, 'auto') }}
     </span>
 
     <br /><br />

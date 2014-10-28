@@ -1,6 +1,6 @@
 # Python Utils
 import os.path
-from datetime import datetime, date, timedelta
+from datetime import timedelta
 
 # PyGeoIP
 import pygeoip
@@ -51,25 +51,30 @@ def country_code(ip):
     return None
 
 
-def missing_duplicated_dates_helper(strings, dateformat, start):
-    if len(strings) == 0:
-        return strings
+def find_monday(d):
+    days_ahead = d.weekday()
+    return d - timedelta(days_ahead)
 
-    # format strings to dates
-    dates = [datetime.strptime(string, dateformat) for string in strings]
-    dates.append(start)
-    dates.sort()
 
-    # find missing dates and append them
-    [dates.append(date) for date in set(dates[0]+timedelta(x) for x in range((dates[-1]-dates[0]).days))]
+def make_daterange(start, stop, scope):
+    if scope == 'y':
+        scopedays = 365
+    if scope == 'm':
+        scopedays = 30
+    if scope == 'w':
+        scopedays = 7
+    elif scope == 'd':
+        scopedays = 1
 
-    # format dates back to strings
-    strings = [datetime.strftime(date, dateformat) for date in dates]
+    daterange = []
+    i = 0
+    while True:
+        x = start + timedelta(i * scopedays)
 
-    # remove duplicates
-    strings = list(set(strings))
+        if x < stop:
+            daterange.append(x)
+            i += 1
+        else:
+            break
 
-    # sort
-    strings.sort()
-
-    return strings
+    return daterange

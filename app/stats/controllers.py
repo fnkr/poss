@@ -21,7 +21,8 @@ from .models import View
 from app.objects.models import Object
 
 # POSS Utils
-from .utils import missing_duplicated_dates_helper
+from .utils import make_daterange
+from .utils import find_monday
 
 # Define the blueprint
 app = Blueprint('stats', __name__)
@@ -44,8 +45,24 @@ def overview(oid):
     else:
         datestart = o.date_created
 
-    if datescope not in ('y', 'm', 'w', 'd'):
-        datescope = 'd'
+    #if datescope not in ('y', 'm', 'w', 'd'):
+    if datescope not in ('y', 'm', 'd'):
+        if datestart > (datetime.datetime.now() - datetime.timedelta(days=90)):
+            datescope = 'd'
+        # elif datestart > (datetime.datetime.now() - datetime.timedelta(days=630)):
+        #     datescope = 'w'
+        elif datestart > (datetime.datetime.now() - datetime.timedelta(days=2739)):
+            datescope = 'm'
+        else:
+            datescope = 'y'
+
+    datestart = datestart.replace(hour=0, minute=0, second=0, microsecond=0)
+    if datescope == 'w':
+        datestart = find_monday(datestart)
+    elif datescope == 'm':
+        datestart = datestart.replace(day=1)
+    elif datescope == 'y':
+        datestart = datestart.replace(month=1, day=1)
 
     # prepare dataset
     data = { 'labels': [] }
@@ -57,10 +74,13 @@ def overview(oid):
     qc = [View.type, db.func.count('*').label('count'), db.extract('year', View.date_created).label('_year')]
     qg = ['type']
     # http://www.w3schools.com/sql/func_extract.asp
-    if datescope in ('m', 'w', 'd'):
+    if datescope in ('m', 'd'):
         qc.append(db.func.LPAD(db.extract('month', View.date_created), 2, '0').label('_month'))
         qg.append('_month')
-    if datescope in ('w', 'd'):
+    if datescope == 'w':
+        qc.append(db.func.LPAD(db.extract('week', View.date_created), 2, '0').label('_week'))
+        qg.append('_week')
+    if datescope == 'd':
         qc.append(db.func.LPAD(db.extract('day', View.date_created), 2, '0').label('_day'))
         qg.append('_day')
     q = q.query(*qc)
@@ -68,25 +88,31 @@ def overview(oid):
     q = q.filter_by(object=o.id)
     q = q.filter(View.date_created >= datestart)
     q = q.all()
+    print(q)
 
     # prepare labels
     for value in q:
         # value: TYPE, COUNT, YEAR, [MONTH,] [WEEK|DAY]
         if datescope == 'y':
             label = value[2]
-        elif datescope == 'm':
+        elif datescope in ('m', 'w'):
             label = '%s-%s' % (value[2], value[3])
-        elif datescope in ('w', 'd'):
+        elif datescope == 'd':
             label = '%s-%s-%s' % (value[2], value[3], value[4])
 
-        data[value[0]][label] = value[1]
-        data['labels'].append(label)
+        data[value[0]][str(label)] = value[1]
 
     # add dates without views to labels
-    if datescope in ('y', 'm'):
-        data['labels'] = missing_duplicated_dates_helper(data['labels'], '%Y-%m', datestart)
-    elif datescope in ('w', 'd'):
-        data['labels'] = missing_duplicated_dates_helper(data['labels'], '%Y-%m-%d', datestart)
+    if datescope == 'y':
+        dateformat = '%Y'
+    elif datescope == 'm':
+        dateformat = '%Y-%m'
+    elif datescope == 'w':
+        dateformat = '%Y-%W'
+    elif datescope == 'd':
+        dateformat = '%Y-%m-%d'
+
+    data['labels'] = [date.strftime(dateformat) for date in make_daterange(datestart, datetime.datetime.now(), datescope)]
 
     # make dict to list
     for viewtype in View.type.type.enums:
@@ -103,11 +129,7 @@ def overview(oid):
         else:
             data[viewtype] = newData
 
-    return render_template('stats/overview.html', o=o, s=s,
-                           data=data,
-                           datescope=datescope,
-                           daterange=request.args.get('range', None)
-                           )
+    return render_template('stats/overview.html', o=o, s=s, data=data)
 
 
 @app.route('/<oid>/stats/traffic_locations')
