@@ -83,7 +83,7 @@ Chart.defaults.global = {
     tooltipTitleFontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
 
     // Number - Tooltip title font size in pixels
-    tooltipTitleFontSize: 0,
+    tooltipTitleFontSize: 14,
 
     // String - Tooltip title font weight style
     tooltipTitleFontStyle: "bold",
