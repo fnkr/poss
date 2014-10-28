@@ -22,67 +22,63 @@
 
 {% block content %}
 <form enctype="multipart/form-data" method="get" action="{{ url_for('objects.list') }}">
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="input-group">
-                <input
-                    id="term"
-                    type="text"
-                    name="term"
-                    size="20"
-                    maxlength="64"
-                    value="{{ term or '' }}"
-                    placeholder="Search"
-                    autocomplete="off"
-                    style="width: 100%"
-                    class="form-control"
-                />
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        Insert
-                    <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
-                        <li>&nbsp;Filter by</li>
-                        <li><a href="javascript:;" id="filter_str">
-                            title / link / filename / object id
-                        </a></li>
-                        <li><a href="javascript:;" id="filter_views">
-                            views
-                        </a></li>
-                        <li class="divider"></li>
-                        <li>&nbsp;Order by</li>
-                        <li><a href="javascript:;" id="order_created">
-                            created
-                        </a></li>
-                        <li><a href="javascript:;" id="order_modified">
-                            modified
-                        </a></li>
-                        <li><a href="javascript:;" id="order_views">
-                            views
-                        </a></li>
-                        <li><a href="javascript:;" id="order_lastview">
-                            last view
-                        </a></li>
-                        <li><a href="javascript:;" id="order_size">
-                            size
-                        </a></li>
-                        <li class="divider"></li>
-                        <li>&nbsp;is</li>
-                        <li><a href="javascript:;" id="is_file">
-                            file
-                        </a></li>
-                        <li><a href="javascript:;" id="is_link">
-                            link
-                        </a></li>
-                        <li><a href="javascript:;" id="is_deleted">
-                            deleted
-                        </a></li>
-                        <li><a href="javascript:;" id="is_notdeleted">
-                            not deleted
-                        </a></li>
-                    </ul>
-                </div>
-            </div>
+    <div class="input-group">
+        <input
+            id="term"
+            type="text"
+            name="term"
+            size="20"
+            maxlength="64"
+            value="{{ term or '' }}"
+            placeholder="Search"
+            autocomplete="off"
+            style="width: 100%"
+            class="form-control"
+        />
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                Insert
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                <li>&nbsp;Filter by</li>
+                <li><a href="javascript:;" id="filter_str">
+                    title / link / filename / object id
+                </a></li>
+                <li><a href="javascript:;" id="filter_views">
+                    views
+                </a></li>
+                <li class="divider"></li>
+                <li>&nbsp;Order by</li>
+                <li><a href="javascript:;" id="order_created">
+                    created
+                </a></li>
+                <li><a href="javascript:;" id="order_modified">
+                    modified
+                </a></li>
+                <li><a href="javascript:;" id="order_views">
+                    views
+                </a></li>
+                <li><a href="javascript:;" id="order_lastview">
+                    last view
+                </a></li>
+                <li><a href="javascript:;" id="order_size">
+                    size
+                </a></li>
+                <li class="divider"></li>
+                <li>&nbsp;is</li>
+                <li><a href="javascript:;" id="is_file">
+                    file
+                </a></li>
+                <li><a href="javascript:;" id="is_link">
+                    link
+                </a></li>
+                <li><a href="javascript:;" id="is_deleted">
+                    deleted
+                </a></li>
+                <li><a href="javascript:;" id="is_notdeleted">
+                    not deleted
+                </a></li>
+            </ul>
         </div>
     </div>
 </form>

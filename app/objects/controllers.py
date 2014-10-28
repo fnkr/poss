@@ -319,8 +319,12 @@ def edit(oid):
         'deleted': [None, None],
         'deleted_reason': [None, None],
         'type': [None, None],
-        'size': [None, None]
+        'size': [None, None],
+        'date_created': [None, None],
+        'date_modified': [None, None],
+        'last_viewed': [None, None]
     }
+    date_modified_before = o.date_modified
 
     if request.method == 'POST':
         if not is_internal(request, allowed=[url_for('objects.edit', oid=oid)]):
@@ -372,6 +376,10 @@ def edit(oid):
                                 'the object has to be deleted to '
                                 'perform this conversation']
 
+        db.session.commit()
+        if o.date_modified != date_modified_before:
+            form['date_modified'] = ['success', 'updated']
+
     form['oid'].insert(0, o.oid)
     form['owner'].insert(0, User.query.get(o.owner).name_email_str())
     form['title'].insert(0, o.title or '')
@@ -380,6 +388,9 @@ def edit(oid):
     form['deleted_reason'].insert(0, (o.deleted_reason or '').upper())
     form['type'].insert(0, o.type.upper())
     form['size'].insert(0, human_readable_size(o.size))
+    form['date_created'].insert(0, o.date_created)
+    form['date_modified'].insert(0, o.date_modified if o.date_modified != o.date_created else '')
+    form['last_viewed'].insert(0, o.last_viewed or '')
 
     return render_template('objects/edit.html', o=o, s=s, form=form)
 

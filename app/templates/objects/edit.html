@@ -63,44 +63,57 @@
 
 <form method="post" action="{{ url_for('objects.edit', oid=o.oid) }}">
     <input type="hidden" name="task" value="object.edit"/>
-    <div class="form-group">
+    <div class="col-md-6 form-group">
         <label for="url">URL</label>
         <input type="text" class="form-control select-on-click" name="url" id="url" value="{{ url_for('objects.get', oid=o.oid, _external=True) }}" readonly>
     </div>
-    <div class="form-group">
+    <div class="col-md-6 form-group">
         <label for="oid">Object ID</label>
         <input type="text" class="form-control select-on-click" name="oid" id="oid" value="{{ form['oid'][0] }}" readonly>
     </div>
-    <div class="form-group">
-        <label for="owner">Owner</label>
-        <input type="text" class="form-control" name="owner" id="owner" value="{{ form['owner'][0] }}" readonly>
-    </div>
-    <div class="form-group {{ form_status('title') }}">
+    <div class="col-md-6 form-group {{ form_status('title') }}">
         <label for="title">Title</label>
         {{ form_message('title') }}
         <input type="text" class="form-control" name="title" id="title" value="{{ form['title'][0] }}">
     </div>
-    <div class="form-group {{ form_status('link') }}">
+    <div class="col-md-6 form-group {{ form_status('link') }}">
         <label for="link">Link / Filename</label>
         {{ form_message('link') }}
         <input type="text" class="form-control" name="link" id="link" value="{{ form['link'][0] }}">
     </div>
-    <div class="form-group">
+    <div class="col-md-6 form-group">
+        <label for="owner">Owner</label>
+        <input type="text" class="form-control" name="owner" id="owner" value="{{ form['owner'][0] }}" readonly>
+    </div>
+    <div class="col-md-6 form-group">
+        <label for="owner">Last viewed</label>
+        <input type="text" class="form-control" name="last_viewed" id="last_viewed" value="{{ form['last_viewed'][0] }}" readonly>
+    </div>
+    <div class="col-md-6 form-group">
         <label for="deleted">Deleted</label>
         <input type="text" class="form-control" name="deleted" id="deleted" value="{{ form['deleted'][0] }}" readonly>
     </div>
-    <div class="form-group">
+    <div class="col-md-6 form-group">
         <label for="deleted_reason">Reason for deletion</label>
         <input type="text" class="form-control" name="deleted_reason" id="deleted_reason" value="{{ form['deleted_reason'][0] }}" readonly>
     </div>
-    <div class="form-group {{ form_status('type') }}">
+    <div class="col-md-6 form-group {{ form_status('type') }}">
         <label for="type">Type</label>
         {{ form_message('type') }}
         <input type="text" class="form-control" name="type" id="type" value="{{ form['type'][0] }}" readonly>
     </div>
-    <div class="form-group">
+    <div class="col-md-6 form-group">
         <label for="size">Size</label>
         <input type="text" class="form-control" name="size" id="size" value="{{ form['size'][0] }}" readonly>
+    </div>
+    <div class="col-md-6 form-group">
+        <label for="size">Date created</label>
+        <input type="text" class="form-control" name="date_created" id="date_created" value="{{ form['date_created'][0] }}" readonly>
+    </div>
+    <div class="col-md-6 form-group {{ form_status('date_modified') }}">
+        <label for="size">Date modified</label>
+        {{ form_message('date_modified') }}
+        <input type="text" class="form-control" name="date_modified" id="date_modified" value="{{ form['date_modified'][0] }}" readonly>
     </div>
     <button type="submit" class="btn btn-success btn-block">Save</button>
 </form>
