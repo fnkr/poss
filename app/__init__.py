@@ -70,6 +70,11 @@ def e_404(e):
 
 @app.errorhandler(500)
 def e_500(e):
+    try:
+        db.session.rollback()
+    except Exception:
+        pass
+
     return render_template(
         'server_message.html',
         window_title='500 Internal Server Error',
