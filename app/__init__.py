@@ -80,7 +80,7 @@ def e_500(e):
         window_title='500 Internal Server Error',
         title='Internal Server Error',
         description='The server encountered an internal error and was unable to complete your request.'
-    ), e.code
+    ), 500
 
 
 @app.after_request
