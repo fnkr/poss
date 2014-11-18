@@ -17,7 +17,13 @@ Reset: every hour
 **1)** Clone the project and checkout the latest tag
 ```
 git clone https://github.com/fnkr/POSS.git
-git checkout 1.0
+
+# Windows
+for /f %c in ('git rev-list --tags --max-count=1') do git checkout %c
+
+# Linux
+git checkout $(git rev-list --tags --max-count=1)
+
 cd poss
 ```
 
@@ -62,7 +68,12 @@ env/bin/python manage.py runserver
 **1)** Fetch and checkout the latest tag
 ```
 git fetch --tags
-git checkout 1.0
+
+# Windows
+for /f %c in ('git rev-list --tags --max-count=1') do git checkout %c
+
+# Linux
+git checkout $(git rev-list --tags --max-count=1)
 ```
 
 **2)** Migrate the database
