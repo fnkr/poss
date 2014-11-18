@@ -9,6 +9,7 @@ Reset: every hour
 ## Requirements
 * git (for installing/upgrading)
 * Python 3.3 or 3.4
+* pip
 * virtualenv
 * MySQL Server
 
