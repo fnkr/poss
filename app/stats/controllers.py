@@ -88,17 +88,20 @@ def overview(oid):
     q = q.filter_by(object=o.id)
     q = q.filter(View.date_created >= datestart)
     q = q.all()
-    print(q)
 
     # prepare labels
     for value in q:
         # value: TYPE, COUNT, YEAR, [MONTH,] [WEEK|DAY]
+        # for some reason value[2]-value[4] is binary on some systems, I have no idea why
         if datescope == 'y':
-            label = value[2]
+            label = value[2].decode('utf-8') if type(value[2]) == bytes else value[2]
         elif datescope in ('m', 'w'):
-            label = '%s-%s' % (value[2], value[3])
+            label = '%s-%s' % (value[2].decode('utf-8') if type(value[2]) == bytes else value[2],
+                               value[3].decode('utf-8') if type(value[3]) == bytes else value[3])
         elif datescope == 'd':
-            label = '%s-%s-%s' % (value[2], value[3], value[4])
+            label = '%s-%s-%s' % (value[2].decode('utf-8') if type(value[2]) == bytes else value[2],
+                                  value[3].decode('utf-8') if type(value[3]) == bytes else value[3],
+                                  value[4].decode('utf-8') if type(value[4]) == bytes else value[4])
 
         data[value[0]][str(label)] = value[1]
 
