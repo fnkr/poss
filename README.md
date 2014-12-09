@@ -54,7 +54,9 @@ env\scripts\python manage.py db upgrade
 env/bin/python manage.py db upgrade
 ```
 
-**6)** Run the server
+**6)** Run the server  
+You can run/test the server with:
+
 ```
 # Windows
 env\scripts\python manage.py runserver
@@ -62,6 +64,10 @@ env\scripts\python manage.py runserver
 # Linux
 env/bin/python manage.py runserver
 ```
+
+The `runserver` method is **NOT recommended for productional use**.
+Use a application server container like FastCGI or uWSGI instead:
+https://github.com/fnkr/POSS/tree/master/docs/deployment
 
 ## Upgrade
 
