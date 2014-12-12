@@ -12,7 +12,7 @@ if __name__ == '__main__':
     @manager.command
     def runserver(host=HOST, port=PORT, debug=DEBUG):
         "Start server"
-        app.run(host=host, port=port, debug=debug)
+        app.run(host=host, port=int(port), debug=debug)
 
     @manager.command
     def maintenance():
