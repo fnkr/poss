@@ -7,6 +7,9 @@ from app.auth.models import User
 class PossTest(unittest.TestCase):
     def setUp(self):
         from app import app
+        app.config.update(
+            SERVER_NAME='localhost:%s' % app.config.get('PORT')
+        )
         self.app = app.test_client()
         from app import db
         self.db = db
@@ -24,7 +27,7 @@ class PossTest(unittest.TestCase):
         self.db.session.add(user)
         self.user_user = user
 
-        self.baseUrl = 'http://localhost:8080'
+        self.baseUrl = 'http://localhost:%s' % app.config.get('PORT')
 
     def login(self, user):
         email = user.email
