@@ -296,10 +296,10 @@ def link():
     try:
         o = Object(session.get('user_id'), 'link', link)
         db.session.add(o)
+        return redirect(url_for('objects.edit', oid=o.oid))
     except InvalidLinkException:
         flash('This is no valid URL.', 'callout-danger')
-
-    return redirect(url_for('objects.edit', oid=o.oid))
+        return redirect(url_for('objects.list'))
 
 
 # Edit object
