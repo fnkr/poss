@@ -118,3 +118,6 @@ env\scripts\python manage.py db migrate -m "comment"
 # Linux
 env/bin/python manage.py db migrate -m "comment"
 ```
+
+**-** Compress js/css using YUI
+https://github.com/yui/yuicompressor/releases
