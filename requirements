@@ -15,4 +15,5 @@ alembic==0.6.7
 compressinja==0.0.2
 future==0.14.1
 itsdangerous==0.24
+pycountry==1.10
 pygeoip==0.3.1

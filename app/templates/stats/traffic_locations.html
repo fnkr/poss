@@ -4,8 +4,67 @@
     Stats
 {% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/stats/traffic_locations.min.css', v=config['APP_VERSION']) }}">
+{% endblock %}
+
 {% block content %}
 {% include('stats/navigation.html') %}
+{% if o.viewcount != 0 %}
+<br/>
+<div class="row">
+    <div class="col-md-3">
+        <div id="chartDiv">
+            <canvas id="chart" width="5px" height="5px"></canvas>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div id="dataDiv">
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Country</th>
+                        <th>Views</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% with %}
+                    {% for country in data %}
+                        {% set i = i + 1 if i else 1  %}
+                        <tr>
+                            <td>{{ i }}</td>
+                            <td>{{ country[0]|countrycode2toname }}</td>
+                            <td>{{ country[1] }}</td>
+                        </tr>
+                    {% endfor %}
+                    {% endwith %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<br /><br /><br /><p class="bs-callout bs-callout-info">Feature not yet available.</p>
+<script>
+    var data = [
+            {% for country in data %}
+                {
+                    value: {{ country[1] }},
+                    color: "#E6E6E6",
+                    highlight: "#D5D5D5",
+                    label: "{{ country[0]|countrycode2toname }}"
+                },
+            {% endfor %}
+        ];
+</script>
+{% else %}
+    <p class="bs-callout bs-callout-info">No data for this object.</p>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+<script src="{{ url_for('static', filename='js/jquery.min.js', v=config['APP_VERSION']) }}"></script>
+<script src="{{ url_for('static', filename='js/chart.min.js', v=config['APP_VERSION']) }}"></script>
+<script src="{{ url_for('static', filename='js/stats/chart.min.js', v=config['APP_VERSION']) }}"></script>
+<script src="{{ url_for('static', filename='js/stats/traffic_locations.min.js', v=config['APP_VERSION']) }}"></script>
 {% endblock %}

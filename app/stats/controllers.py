@@ -143,7 +143,14 @@ def traffic_locations(oid):
     s = session_to_user(request, session, user_id=o.owner, or_admin=True)
     if s.auth_error: return auth_error_return_helper(s)
 
-    return render_template('stats/traffic_locations.html', o=o, s=s)
+    q = db.session
+    q = q.query(View.country_code, db.func.count(View.country_code).label('_count'))
+    q = q.filter(View.object == o.id)
+    q = q.group_by(View.country_code)
+    q = q.order_by('_count desc')
+    q = q.all()
+
+    return render_template('stats/traffic_locations.html', o=o, s=s, data=q)
 
 
 @app.route('/<oid>/stats/traffic_sources')

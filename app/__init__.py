@@ -8,6 +8,9 @@ from flask import Flask, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.migrate import Migrate
 
+# Utils
+from utils.countrycode2toname import countrycode2toname
+
 # Define the WSGI application object
 app = Flask(__name__)
 app.config['APP_NAME'] = 'POSS'
@@ -92,6 +95,7 @@ def db_commit(response):
 # Jinja2 Functions
 from app.objects.utils import human_readable_size
 app.jinja_env.globals.update(human_readable_size=human_readable_size)
+app.jinja_env.filters['countrycode2toname'] = countrycode2toname
 
 # Register functions
 from .auth.controllers import app as auth
