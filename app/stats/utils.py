@@ -1,4 +1,6 @@
 # Python Utils
+import datetime
+import itertools
 import os.path
 from datetime import timedelta
 
@@ -56,25 +58,30 @@ def find_monday(d):
     return d - timedelta(days_ahead)
 
 
+SCOPE_NAME_TO_DAYS = {
+    'y': 365,
+    'm': 30,
+    'w': 7,
+    'd': 1,
+}
+
+
 def make_daterange(start, stop, scope):
-    if scope == 'y':
-        scopedays = 365
-    if scope == 'm':
-        scopedays = 30
-    if scope == 'w':
-        scopedays = 7
-    elif scope == 'd':
-        scopedays = 1
+    scope_days = SCOPE_NAME_TO_DAYS[scope]
 
-    daterange = []
-    i = 0
-    while True:
-        x = start + timedelta(i * scopedays)
-
-        if x < stop:
-            daterange.append(x)
-            i += 1
-        else:
+    for i in itertools.count():
+        x = get_first_day(start + timedelta(i * scope_days), scope)
+        if x > stop:
             break
+        yield x
 
-    return daterange
+
+def get_first_day(dt, scope):
+    if scope == 'y':
+        return datetime.datetime(dt.year, 1, 1)
+    elif scope == 'm':
+        return datetime.datetime(dt.year, dt.month, 1)
+    elif scope == 'w':
+        return find_monday(dt)
+    elif scope == 'd':
+        return datetime.datetime(dt.year, dt.month, dt.day)

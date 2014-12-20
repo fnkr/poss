@@ -45,12 +45,11 @@ def overview(oid):
     else:
         datestart = o.date_created
 
-    #if datescope not in ('y', 'm', 'w', 'd'):
-    if datescope not in ('y', 'm', 'd'):
+    if datescope not in ('y', 'm', 'w', 'd'):
         if datestart > (datetime.datetime.now() - datetime.timedelta(days=90)):
             datescope = 'd'
-        # elif datestart > (datetime.datetime.now() - datetime.timedelta(days=630)):
-        #     datescope = 'w'
+        elif datestart > (datetime.datetime.now() - datetime.timedelta(days=630)):
+            datescope = 'w'
         elif datestart > (datetime.datetime.now() - datetime.timedelta(days=2739)):
             datescope = 'm'
         else:
@@ -115,7 +114,7 @@ def overview(oid):
     elif datescope == 'd':
         dateformat = '%Y-%m-%d'
 
-    data['labels'] = [date.strftime(dateformat) for date in make_daterange(datestart, datetime.datetime.now(), datescope)]
+    data['labels'] = list(sorted(set([date.strftime(dateformat) for date in make_daterange(datestart, datetime.datetime.now(), datescope)])))
 
     # make dict to list
     for viewtype in View.type.type.enums:
