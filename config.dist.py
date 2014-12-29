@@ -25,8 +25,8 @@ DATABASE_CONNECT_OPTIONS = {}
 CSRF_ENABLED = True
 # Random strings for cookie generation, 40 chars should be enough,
 # https://api.fnkr.net/random/?length=40&count=2
-CSRF_SESSION_KEY = 'UV5IIDFh81YaxNXrYSp01hYMYPtxqxJWDuaBgwIj'
-SECRET_KEY = 'mEFvm0yN9x6DSwmSbI7vhDR7r8aPKsqm8fy8LEL7'
+CSRF_SESSION_KEY = '--- CHANGE THIS TO SOME RANDOM VALUE ---'
+SECRET_KEY = '--- CHANGE THIS TO SOME RANDOM VALUE ---'
 SESSION_COOKIE_NAME = 'poss'
 PERMANENT_SESSION_LIFETIME = 2678400
 SESSION_COOKIE_SECURE = False
