@@ -102,6 +102,11 @@ env\scripts\python manage.py db upgrade
 env/bin/python manage.py db upgrade
 ```
 
+## Command line client
+
+There is a command line client for POSS, you can get it from here:
+https://github.com/fnkr/POSS-Client
+
 ## Development notes
 **-** Run the server in development mode
 ```
