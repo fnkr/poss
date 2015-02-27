@@ -128,3 +128,12 @@ env/bin/python manage.py db migrate -m "comment"
 
 **-** Compress js/css using YUI
 https://github.com/yui/yuicompressor/releases
+
+**-** Upgrade installed packages
+```
+# Windows
+for /f "delims===" %i in ('env\scripts\pip freeze -l') do env\scripts\pip install -U %i
+
+# Linux
+env/bin/pip freeze -l | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 env/bin/pip install -U
+```
