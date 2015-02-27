@@ -25,6 +25,10 @@ class View(Base):
                                                      onupdate='CASCADE'))
 
 
+    # Disable date_modified column for this model
+    date_modified = None
+
+
     def __init__(self, object, type, ip, referrer, user_agent):
         self.object = object
         self.type = type
@@ -51,6 +55,9 @@ class Referrer(Base):
 
     referrer = db.Column(db.String(255), nullable=True, unique=True)
 
+    # Disable date_modified column for this model
+    date_modified = None
+
     def __init__(self, referrer):
         self.referrer = referrer
 
@@ -62,6 +69,9 @@ class UserAgent(Base):
     __tablename__ = 'user_agent'
 
     user_agent = db.Column(db.String(255), nullable=True, unique=True)
+
+    # Disable date_modified column for this model
+    date_modified = None
 
     def __init__(self, user_agent):
         self.user_agent = user_agent
