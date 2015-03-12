@@ -31,6 +31,9 @@ cd poss
 
 **2)** Set up your environment
 ```
+# Make sure that virtualenv uses a supported Python version,
+# maybe you have to set the path to Python manually. For example:
+# `virtualenv --python=$(which python3.4) env` or `virtualenv3.4 env`
 virtualenv env
 
 # Windows
