@@ -53,10 +53,10 @@ http://dev.maxmind.com/geoip/legacy/geolite/
 **5)** Set up the database
 ```
 # Windows
-env\scripts\python manage.py db upgrade
+env\scripts\python manage.py db stamp head
 
 # Linux
-env/bin/python manage.py db upgrade
+env/bin/python manage.py db stamp head
 ```
 
 **6)** Run the server  
