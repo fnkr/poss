@@ -46,7 +46,7 @@ def maintenance_file_deleted_from_datadir():
     '''
     Set files to deleted in database if they are deleted locally.
     '''
-    for object in Object.query.filter(Object.deleted == False).all():
+    for object in Object.query.filter(Object.type == 'file', Object.deleted == False).all():
         if not os.path.isfile(object.filepath()):
             log('mark object %s as deleted, "%s" does not exist' % (object.oid, object.filepath()))
             object.delete('system')
