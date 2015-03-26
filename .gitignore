@@ -3,6 +3,7 @@ __pycache__/
 env/
 data/
 .c9/
+.idea/
 GeoIP.dat
 GeoIPv6.dat
 config.py
