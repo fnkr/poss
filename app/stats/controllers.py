@@ -45,23 +45,19 @@ def overview(oid):
     else:
         datestart = o.date_created
 
-    if datescope not in ('y', 'm', 'w', 'd'):
+    if datescope not in ('m', 'w', 'd'):
         if datestart > (datetime.datetime.now() - datetime.timedelta(days=90)):
             datescope = 'd'
         elif datestart > (datetime.datetime.now() - datetime.timedelta(days=630)):
             datescope = 'w'
-        elif datestart > (datetime.datetime.now() - datetime.timedelta(days=2739)):
-            datescope = 'm'
         else:
-            datescope = 'y'
+            datescope = 'm'
 
     datestart = datestart.replace(hour=0, minute=0, second=0, microsecond=0)
     if datescope == 'w':
         datestart = find_monday(datestart)
     elif datescope == 'm':
         datestart = datestart.replace(day=1)
-    elif datescope == 'y':
-        datestart = datestart.replace(month=1, day=1)
 
     # prepare dataset
     data = { 'labels': [] }
@@ -92,9 +88,7 @@ def overview(oid):
     for value in q:
         # value: TYPE, COUNT, YEAR, [MONTH,] [WEEK|DAY]
         # for some reason value[2]-value[4] is binary on some systems, I have no idea why
-        if datescope == 'y':
-            label = value[2].decode('utf-8') if type(value[2]) == bytes else value[2]
-        elif datescope in ('m', 'w'):
+        if datescope in ('m', 'w'):
             label = '%s-%s' % (value[2].decode('utf-8') if type(value[2]) == bytes else value[2],
                                value[3].decode('utf-8') if type(value[3]) == bytes else value[3])
         elif datescope == 'd':
@@ -105,9 +99,7 @@ def overview(oid):
         data[value[0]][str(label)] = value[1]
 
     # add dates without views to labels
-    if datescope == 'y':
-        dateformat = '%Y'
-    elif datescope == 'm':
+    if datescope == 'm':
         dateformat = '%Y-%m'
     elif datescope == 'w':
         dateformat = '%Y-%W'
