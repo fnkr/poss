@@ -1,6 +1,6 @@
 # POSS - Personal Object Sharing System
 
-[![Build Status](https://magnum.travis-ci.com/fnkr/POSS.svg?token=Upy55UysDyQpDJCzdKA3&branch=master)](https://magnum.travis-ci.com/fnkr/POSS)
+[![Build Status](https://travis-ci.org/fnkr/POSS.svg?branch=master)](https://travis-ci.org/fnkr/POSS)
 
 ## Demo
 https://demo.ge1.me  
