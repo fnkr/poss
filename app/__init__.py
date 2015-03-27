@@ -2,7 +2,7 @@
 import sys
 
 # Flask
-from flask import Flask, render_template
+from flask import Flask, render_template, request, send_from_directory
 
 # SQLAlchemy
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -106,6 +106,12 @@ app.register_blueprint(objects)
 
 from .stats.controllers import app as stats
 app.register_blueprint(stats)
+
+
+@app.route('/robots.txt')
+def overview():
+    return send_from_directory(app.static_folder, request.path[1:])
+
 
 db.create_all()
 
