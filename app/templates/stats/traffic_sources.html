@@ -7,5 +7,22 @@
 {% block content %}
 {% include('stats/navigation.html') %}
 
-<p class="bs-callout bs-callout-info">Feature not yet available.</p>
+{% if data.__len__() %}
+    <br/>
+
+    <table class="table">
+        <tr>
+            <th>Referrer</th>
+            <th>Count</th>
+        </tr>
+        {% for item in data %}
+            <tr>
+                <th>{{ item[1].referrer }}</th>
+                <th>{{ item[2] }}</th>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p class="bs-callout bs-callout-info">No data for this object.</p>
+{% endif %}
 {% endblock %}

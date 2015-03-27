@@ -17,7 +17,7 @@ from app.auth.apis import session_to_user
 from app.auth.utils import auth_error_return_helper
 
 # POSS Models
-from .models import View
+from .models import View, Referrer
 from app.objects.models import Object
 
 # POSS Utils
@@ -152,7 +152,11 @@ def traffic_sources(oid):
     s = session_to_user(request, session, user_id=o.owner, or_admin=True)
     if s.auth_error: return auth_error_return_helper(s)
 
-    return render_template('stats/traffic_sources.html', o=o, s=s)
+    data = db.session.query(View, Referrer, db.func.count(View.referrer).label('hits')).join(Referrer).group_by(View.referrer).filter(
+        View.object == o.id
+    ).order_by('hits desc').all()
+
+    return render_template('stats/traffic_sources.html', o=o, s=s, data=data)
 
 
 @app.route('/<oid>/stats/traffic_settings')
