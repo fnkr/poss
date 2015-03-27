@@ -111,32 +111,4 @@ There is a command line client for POSS, you can get it from here:
 https://github.com/fnkr/POSS-Client
 
 ## Development notes
-**-** Run the server in development mode
-```
-# Windows
-env\scripts\python manage.py runserver --debug
-
-# Linux
-env/bin/python manage.py runserver --debug
-```
-
-**-** Create a migration after you changed the database
-```
-# Windows
-env\scripts\python manage.py db migrate -m "comment"
-
-# Linux
-env/bin/python manage.py db migrate -m "comment"
-```
-
-**-** Compress js/css using YUI
-https://github.com/yui/yuicompressor/releases
-
-**-** Upgrade installed packages
-```
-# Windows
-for /f "delims===" %i in ('env\scripts\pip freeze -l') do env\scripts\pip install -U %i
-
-# Linux
-env/bin/pip freeze -l | grep -v '^\-e' | cut -d = -f 1 | xargs -n1 env/bin/pip install -U
-```
+[CONTRIBUTING.md](https://github.com/fnkr/POSS/blob/master/CONTRIBUTING.md)
