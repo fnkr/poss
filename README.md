@@ -72,7 +72,7 @@ env\scripts\python manage.py runserver
 env/bin/python manage.py runserver
 ```
 
-The `runserver` method is **NOT recommended for productional use**.
+The `runserver` method is NOT recommended for productional use.
 Use a application server container like FastCGI or uWSGI instead:
 https://github.com/fnkr/POSS/tree/master/docs/deployment
 

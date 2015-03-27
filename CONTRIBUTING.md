@@ -16,10 +16,10 @@ env/bin/python manage.py runserver --debug
 **-** Compress `js`/`css` using YUI
 https://github.com/yui/yuicompressor/releases
 — I like PyCharm and use the File Watchers feature so that [minified versions
-are created automatically as soon as I save a `js` or `css` file in the IDE]
+are generated automatically as soon as I save a `js` or `css` file]
 (https://github.com/fnkr/POSS/blob/master/docs/resources/PyCharm/watchers.xml).
 Other IDE's or text editors have similar features or plugins
-(e.g. there is a YUI compressor plugin for [Sublime Text](https://packagecontrol.io/packages/YUI%20Compressor)).
+(e.g. there is a [YUI compressor plugin for Sublime Text](https://packagecontrol.io/packages/YUI%20Compressor)).
 
 **-** Create a migration after you changed the database
 ```
