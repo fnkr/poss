@@ -1,6 +1,7 @@
 # POSS - Personal Object Sharing System
 
 [![Build Status](https://travis-ci.org/fnkr/POSS.svg?branch=master)](https://travis-ci.org/fnkr/POSS)
+[![Requirements Status](https://requires.io/github/fnkr/POSS/requirements.svg?branch=master)](https://requires.io/github/fnkr/POSS/requirements/?branch=master)
 
 ## Demo
 https://demo.ge1.me  
