@@ -26,6 +26,7 @@ from pygments.formatters import HtmlFormatter
 from app import db
 
 # POSS Utils
+from utils.expand_list import expand_int_list
 from .utils import human_readable_size
 from .utils import pygments_supports
 from .utils import format_object_title
@@ -418,7 +419,8 @@ def get(oid):
                 lexer = get_lexer_for_filename('.txt')
             else:
                 lexer = get_lexer_for_filename(o.link)
-            formatter = HtmlFormatter(linespans='line')
+            hl_lines = expand_int_list(request.args.get('H'))
+            formatter = HtmlFormatter(linespans='line', hl_lines=hl_lines)
             code = highlight(code, lexer, formatter)
             language = lexer.name
 
