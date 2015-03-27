@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/fnkr/POSS.svg?branch=master)](https://travis-ci.org/fnkr/POSS)
 [![Requirements Status](https://requires.io/github/fnkr/POSS/requirements.svg?branch=master)](https://requires.io/github/fnkr/POSS/requirements/?branch=master)
+[![Coverage Status](https://coveralls.io/repos/fnkr/POSS/badge.svg)](https://coveralls.io/r/fnkr/POSS)
 
 ## Demo
 https://demo.ge1.me  
