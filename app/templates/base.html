@@ -5,7 +5,7 @@
     <title>{% block title %}{% endblock %} - {{ config['APP_NAME'] }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css', v=config['APP_VERSION']) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/bootstrap.min.css', v=config['APP_VERSION']) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/fontello.min.css', v=config['APP_VERSION']) }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/general.min.css', v=config['APP_VERSION']) }}">
 
