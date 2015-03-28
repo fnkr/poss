@@ -1,5 +1,12 @@
 $(document).ready(function() {
-    $("#paste-input").focus();
+    var textarea = $('#paste-input-textarea').addClass("hidden");
+    $('#paste-input-editor').removeClass("hidden");
+    var editor = ace.edit("paste-input-editor");
+    editor.getSession().setValue(textarea.val());
+    editor.getSession().on('change', function(){
+        textarea.val(editor.getSession().getValue());
+    });
+    editor.focus();
 
     // $('#expire_type').change(function() {
     //     type = $('#expire_type').val();

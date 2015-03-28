@@ -5,9 +5,9 @@
 [![Coverage Status](https://coveralls.io/repos/fnkr/POSS/badge.svg)](https://coveralls.io/r/fnkr/POSS)
 
 ## Demo
-https://demo.ge1.me  
-Email: demo  
-Password: demo  
+https://demo.ge1.me
+Email: demo
+Password: demo
 Reset: every hour
 
 ## Requirements

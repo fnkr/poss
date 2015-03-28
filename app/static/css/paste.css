@@ -1,5 +1,11 @@
-#paste-input {
+#paste-input-editor {
+    position: relative;
+    height: 500px;
+}
+
+#paste-input-textarea {
     width: 100%;
+    min-height: 500px;
     font-family: monospace;
 }
 
@@ -22,3 +28,4 @@
 #paste-submit-th {
     padding-left: 0;
 }
+
