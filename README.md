@@ -10,6 +10,9 @@ Email: demo
 Password: demo  
 Reset: every hour
 
+## Screenshots
+[Screenshots](https://ge1.me/78d2f899c9ba4fdd85ee)
+
 ## Requirements
 * git (for installing/upgrading)
 * Python 3.3 or 3.4
