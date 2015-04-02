@@ -42,10 +42,10 @@ cd poss
 virtualenv env
 
 # Windows
-env\scripts\pip install -r requirements
+env\scripts\pip install -r requirements.txt
 
 # Linux
-env/bin/pip install -r requirements
+env/bin/pip install -r requirements.txt
 ```
 
 **3)** Download GeoIP databse (optional)  
@@ -95,10 +95,10 @@ git checkout $(git rev-list --tags --max-count=1)
 **2)** Update environment
 ```
 # Windows
-env\scripts\pip install -r requirements
+env\scripts\pip install -r requirements.txt
 
 # Linux
-env/bin/pip install -r requirements
+env/bin/pip install -r requirements.txt
 ```
 
 **3)** Migrate the database

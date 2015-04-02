@@ -3,7 +3,7 @@ python:
   - "3.3"
   - "3.4"
 before_script:
-  - pip install -r requirements
+  - pip install -r requirements.txt
   - mysql -u root -e "create user poss@localhost identified by 'poss';"
   - mysql -u root -e "create database poss;"
   - mysql -u root -e "grant all privileges on poss.* to poss@localhost;"
