@@ -14,11 +14,11 @@ Reset: every hour
 [Screenshots](https://ge1.me/78d2f899c9ba4fdd85ee)
 
 ## Requirements
-* git (for installing/upgrading)
+* git
 * Python 3.3 or 3.4
 * pip
 * virtualenv
-* MySQL Server
+* [a supported database system](https://github.com/fnkr/POSS/blob/master/docs/databases.md), e.g. MySQL
 
 ## Install
 **1)** Clone the project and checkout the latest tag
@@ -53,7 +53,7 @@ Download and extract "GeoLite Country" and "GeoLite Country IPv6" databases
 and put the files `GeoIP.dat` and `GeoIPv6.dat` into the main directory.
 http://dev.maxmind.com/geoip/legacy/geolite/
 
-**4)** Copy config.dist.py to config.py and modify as needed. Note that POSS has only been tested with MySQL (5.5), everything else may not work.
+**4)** Copy config.dist.py to config.py and modify as needed. [List of supported Database systems](https://github.com/fnkr/POSS/blob/master/docs/databases.md).
 
 **5)** Set up the database
 ```
