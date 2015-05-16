@@ -65,7 +65,7 @@ class Object(Base):
                                                 onupdate='CASCADE'))
 
     # Object type and oid
-    type = db.Column(db.Enum('file', 'link'), nullable=False)
+    type = db.Column(db.Enum('file', 'link', name='poss_object_type'), nullable=False)
     size = db.Column(db.Integer, nullable=True)
 
     # Location
@@ -76,8 +76,8 @@ class Object(Base):
 
     # Lifecycle
     deleted = db.Column(db.Boolean, nullable=False, default=False)
-    deleted_reason = db.Column(db.Enum('user', 'admin', 'autodelete', 'system'), nullable=True)
-    autodelete_type = db.Column(db.Enum('on_view', 'by_viewer', 'at_time'), nullable=True)
+    deleted_reason = db.Column(db.Enum('user', 'admin', 'autodelete', 'system', name='poss_object_deleted_reason'), nullable=True)
+    autodelete_type = db.Column(db.Enum('on_view', 'by_viewer', 'at_time', name='poss_object_autodelete_type'), nullable=True)
     autodelete_param = db.Column(db.Integer, nullable=True)
 
     # Views

@@ -12,7 +12,7 @@ class View(Base):
                                                  onupdate='CASCADE'))
 
     # View Type
-    type = db.Column(db.Enum('page', 'raw', 'download', 'redirect'), nullable=True)
+    type = db.Column(db.Enum('page', 'raw', 'download', 'redirect', name='poss_view_type'), nullable=True)
 
     # Viewer
     ip = db.Column(db.String(39))
