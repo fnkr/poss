@@ -50,7 +50,7 @@ app = Blueprint('objects', __name__)
 
 
 # Home
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET'])  # noqa
 def list():
     s = session_to_user(request, session)
     if s.auth_error: return auth_error_return_helper(s)
@@ -92,9 +92,9 @@ def list():
                 # Is deleted
                 if subterm[1] == 'deleted':
                     if subterm_len == 3 and subterm[2] == 'no':
-                        filter.append(Object.deleted == False)
+                        filter.append(Object.deleted == False)  # noqa
                     else:
-                        filter.append(Object.deleted == True)
+                        filter.append(Object.deleted == True)  # noqa
                 # Is type ...
                 if subterm[1] in ('link', 'file'):
                     if subterm_len == 2:
@@ -158,7 +158,7 @@ def list():
 
 
 # Upload
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload', methods=['GET', 'POST'])  # noqa
 @app.route('/<oid>/upload', methods=['GET', 'POST'])
 def upload(oid=None):
     if oid:
@@ -172,11 +172,11 @@ def upload(oid=None):
         s = session_to_user(request, session, api=True)
         if s.auth_error: return auth_error_return_helper(s)
 
-
     if request.method == 'POST':
-        if not is_internal(request,
-                           allowed=[url_for('objects.upload', oid=oid)]) \
-            and s.auth_method == 'COOKIE':
+        if not is_internal(
+            request,
+            allowed=[url_for('objects.upload', oid=oid)]
+        ) and s.auth_method == 'COOKIE':
             return abort(403)
 
         files = []
@@ -190,10 +190,12 @@ def upload(oid=None):
                 if randomize_filename:
                     o.randomize_filename()
             else:
-                o = Object(s.id,
-                                'file',
-                                file.filename,
-                                randomize_filename=randomize_filename)
+                o = Object(
+                    s.id,
+                    'file',
+                    file.filename,
+                    randomize_filename=randomize_filename
+                )
                 db.session.add(o)
 
             file_path = o.filepath()
@@ -221,7 +223,7 @@ def upload(oid=None):
 
 
 # Paste
-@app.route('/paste', methods=['GET', 'POST'])
+@app.route('/paste', methods=['GET', 'POST'])  # noqa
 @app.route('/<oid>/paste', methods=['GET', 'POST'])
 def paste(oid=None):
     if oid:
@@ -261,9 +263,10 @@ def paste(oid=None):
             if randomize_filename:
                 o.randomize_filename()
         else:
-            o = Object(session.get('user_id'),
-                            'file', filename,
-                            randomize_filename=randomize_filename)
+            o = Object(
+                session.get('user_id'), 'file', filename,
+                randomize_filename=randomize_filename,
+            )
             db.session.add(o)
 
         file_path = o.filepath()
@@ -304,7 +307,7 @@ def link():
 
 
 # Edit object
-@app.route('/<oid>/edit', methods=['GET', 'POST'])
+@app.route('/<oid>/edit', methods=['GET', 'POST'])  # noqa
 def edit(oid):
     o = Object.query.filter(Object.oid == oid).first()
     if not o: return abort(404)
