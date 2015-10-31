@@ -14,7 +14,7 @@ Reset: every hour
 
 ## Requirements
 * git
-* Python 3.3 or 3.4
+* Python 3.3, 3.4 or 3.5
 * pip
 * virtualenv
 * [a supported database system](https://github.com/fnkr/POSS/blob/master/docs/databases.md), e.g. MySQL
