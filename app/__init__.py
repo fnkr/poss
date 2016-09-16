@@ -14,7 +14,7 @@ from utils.countrycode2toname import countrycode2toname
 # Define the WSGI application object
 app = Flask(__name__)
 app.config['APP_NAME'] = 'POSS'
-app.config['APP_VERSION'] = '1.0'
+app.config['APP_VERSION'] = '1.1'
 
 # Configurations
 config = 'config'
