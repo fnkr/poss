@@ -4,13 +4,13 @@
 [![Requirements Status](https://requires.io/github/fnkr/POSS/requirements.svg?branch=master)](https://requires.io/github/fnkr/POSS/requirements/?branch=master)
 
 ## Demo
-https://demo.ge1.me  
+https://poss.fnkr.net  
 Email: demo  
 Password: demo  
 Reset: every hour
 
 ## Screenshots
-[Screenshots](https://ge1.me/78d2f899c9ba4fdd85ee)
+[Screenshots](https://fs.fnkr.net/78d2f899c9ba4fdd85ee)
 
 ## Requirements
 * git
