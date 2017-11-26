@@ -13,7 +13,7 @@ Reset: every hour
 [Screenshots](https://fs.fnkr.net/78d2f899c9ba4fdd85ee)
 
 ## Requirements
-* git
+* Git
 * Python 3.3, 3.4 or 3.5
 * pip
 * virtualenv
