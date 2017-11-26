@@ -16,6 +16,8 @@ app = Flask(__name__)
 app.config['APP_NAME'] = 'POSS'
 app.config['APP_VERSION'] = '1.1'
 
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 # Configurations
 config = 'config'
 for argument in sys.argv:
