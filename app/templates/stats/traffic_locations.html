@@ -34,7 +34,7 @@
                         {% set i = i + 1 if i else 1  %}
                         <tr>
                             <td>{{ i }}</td>
-                            <td>{{ country[0]|countrycode2toname }}</td>
+                            <td>{{ country[0]|countrycode2toname or 'Unknown' }}</td>
                             <td>{{ country[1] }}</td>
                         </tr>
                     {% endfor %}
@@ -52,7 +52,7 @@
                     value: {{ country[1] }},
                     color: "#E6E6E6",
                     highlight: "#D5D5D5",
-                    label: "{{ country[0]|countrycode2toname }}"
+                    label: "{{ country[0]|countrycode2toname or 'Unknown' }}"
                 },
             {% endfor %}
         ];
