@@ -5,8 +5,8 @@ import sys
 from flask import Flask, render_template, request, send_from_directory
 
 # SQLAlchemy
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 # Utils
 from utils.countrycode2toname import countrycode2toname
