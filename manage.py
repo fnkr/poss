@@ -11,7 +11,9 @@ if __name__ == '__main__':
 
     @manager.command
     def runserver(host=HOST, port=PORT, debug=DEBUG):
-        "Start server"
+        """"
+        Start server
+        """
         app.run(host=host, port=int(port), debug=debug)
 
     @manager.command
