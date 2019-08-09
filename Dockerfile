@@ -1,6 +1,7 @@
 FROM python:3-alpine
 
 RUN set -e -x; \
+        apk add --no-cache uwsgi; \
         apk add --no-cache --virtual .build-deps \
                 git \
                 build-base \
@@ -10,7 +11,6 @@ RUN set -e -x; \
             cp /opt/poss/config.dist.py /opt/poss/config.py; \
             echo "from config_override import *" >>/opt/poss/config.py; \
             pip install -r /opt/poss/requirements.txt; \
-            pip install uwsgi; \
             apk add --no-cache sudo; \
         apk del .build-deps; \
         rm -rf /root/.cache; \
