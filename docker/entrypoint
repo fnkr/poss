@@ -1,0 +1,3 @@
+#!/bin/sh
+chown -R poss:poss /var/poss
+exec sudo -E -u poss "$@"
