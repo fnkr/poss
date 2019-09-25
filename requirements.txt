@@ -1,4 +1,4 @@
-alembic==1.2.0
+alembic==1.2.1
 Flask==1.1.1
 Flask-Migrate==2.5.2
 Flask-Script==2.0.6
