@@ -1,2 +1,2 @@
-pyperclip==1.5.4
+pyperclip==1.7.0
 requests==2.22.0
