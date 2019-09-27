@@ -1,7 +1,5 @@
 # POSS-Client
 
-[![Requirements Status](https://requires.io/github/fnkr/POSS-Client/requirements.svg?branch=master)](https://requires.io/github/fnkr/POSS-Client/requirements/?branch=master)
-
 Python based client for uploading files to POSS.
 You can download a precompiled version for Windows x64 on the releases page (no requirements, you can skip to step 3).
 
