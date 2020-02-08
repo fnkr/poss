@@ -13,12 +13,12 @@ jobs:
       - name: Docker Login (docker.io)
         run: |
           docker login --username="${{ secrets.DOCKER_USERNAME }}" --password-stdin <<<"${{ secrets.DOCKER_PASSWORD }}"
-        if: startsWith(github.event.ref, 'refs/tags/')
+        if: startsWith(github.event.ref, 'refs/tags/') || github.event.ref == 'refs/heads/master'
       - name: Docker Push (docker.io)
         run: |
           docker tag "${{ github.repository }}/poss:${{ github.sha }}" "docker.io/${{ github.repository }}:${GITHUB_REF#refs/*/}" && \
           docker push "docker.io/${{ github.repository }}:${GITHUB_REF#refs/*/}"
-        if: startsWith(github.event.ref, 'refs/tags/')
+        if: startsWith(github.event.ref, 'refs/tags/') || github.event.ref == 'refs/heads/master'
       #- name: Docker Login (docker.pkg.github.com)
       #  run: |
       #    docker login --username="${{ secrets.GITHUB_DOCKER_USERNAME }}" --password-stdin docker.pkg.github.com <<<"${{ secrets.GITHUB_DOCKER_PASSWORD }}"
