@@ -1,4 +1,4 @@
-FROM fedora:30
+FROM fedora:31
 
 RUN sed -i -E 's|^(metalink\=https\:\/\/mirrors\.fedoraproject\.org\/metalink\?repo\=fedora\-\$releasever&arch\=\$basearch)$|#\1\nbaseurl=https://mirror.fnkr.net/fedora/releases/$releasever/Everything/$basearch/os/\ndeltarpm=0|' /etc/yum.repos.d/fedora.repo && \
     sed -i -E 's|^(metalink\=https\:\/\/mirrors\.fedoraproject\.org\/metalink\?repo\=updates\-released\-f\$releasever&arch\=\$basearch)$|#\1\nbaseurl=https://mirror.fnkr.net/fedora/updates/$releasever/Everything/$basearch/\ndeltarpm=0|' /etc/yum.repos.d/fedora-updates.repo && \
