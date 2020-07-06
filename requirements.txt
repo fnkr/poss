@@ -6,7 +6,7 @@ Flask-SQLAlchemy==2.4.3
 Flask-WTF==0.14.3
 future==0.18.2
 Jinja2==2.11.2
-pycountry==20.7.2
+pycountry==20.7.3
 pygeoip==0.3.2
 Pygments==2.6.1
 PyMySQL==0.9.3
