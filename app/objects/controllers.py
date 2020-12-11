@@ -244,6 +244,7 @@ def paste(oid=None):
 
         paste = request.form.get('paste', default='').replace('\r\n', '\n')
         filename = request.form.get('filename', default='txt')
+        encrypted = request.form.get('encrypted', default='off')
         randomize_filename = request.form.get('randomize_filename',
                                               default=False)
 
@@ -268,6 +269,8 @@ def paste(oid=None):
                 randomize_filename=randomize_filename,
             )
             db.session.add(o)
+
+        o.encrypted = encrypted == 'on'
 
         file_path = o.filepath()
         try:
@@ -326,7 +329,8 @@ def edit(oid):
         'size': [None, None],
         'date_created': [None, None],
         'date_modified': [None, None],
-        'last_viewed': [None, None]
+        'last_viewed': [None, None],
+        'encrypted': [None, None],
     }
     date_modified_before = o.date_modified
 
@@ -395,6 +399,7 @@ def edit(oid):
     form['date_created'].insert(0, o.date_created)
     form['date_modified'].insert(0, o.date_modified if o.date_modified != o.date_created else '')
     form['last_viewed'].insert(0, o.last_viewed or '')
+    form['encrypted'].insert(0, 'Yes' if o.encrypted else 'No')
 
     return render_template('objects/edit.html', o=o, s=s, form=form)
 

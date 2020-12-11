@@ -115,6 +115,10 @@
         {{ form_message('date_modified') }}
         <input type="text" class="form-control" name="date_modified" id="date_modified" value="{{ form['date_modified'][0] }}" readonly>
     </div>
+    <div class="col-md-6 form-group">
+        <label for="encrypted">Encrypted</label>
+        <input type="text" class="form-control" name="encrypted" id="encrypted" value="{{ form['encrypted'][0] }}" readonly>
+    </div>
     <button type="submit" class="btn btn-success btn-block">Save</button>
 </form>
 <br /><br />

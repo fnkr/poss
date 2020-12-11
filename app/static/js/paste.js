@@ -21,4 +21,8 @@ $(document).ready(function() {
     //         $('#expire_time').hide();
     //     }
     // });
+
+    window.poss_encrypt = function (key, data) {
+        return btoa(data);
+    }
 });

@@ -29,3 +29,7 @@ $('.hll').parent().each(function(_, element) {
 window.onpopstate = function() {
     window.location.reload();
 };
+
+window.poss_decrypt = function (key, data) {
+    return atob(data);
+}

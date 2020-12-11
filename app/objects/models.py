@@ -67,6 +67,7 @@ class Object(Base):
     # Object type and oid
     type = db.Column(db.Enum('file', 'link', name='poss_object_type'), nullable=False)
     size = db.Column(db.Integer, nullable=True)
+    encrypted = db.Column(db.Boolean, default=False)
 
     # Location
     oid = db.Column(db.String(64), nullable=False, unique=True)

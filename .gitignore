@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 env/
+/venv/
 data/
 .c9/
 .idea/
