@@ -1,0 +1,15 @@
+version: '3.6'
+volumes:
+  mariadb_data: {}
+services:
+  mariadb:
+    image: mariadb:10
+    ports:
+      - 127.0.0.1:3306:3306
+    volumes:
+      - mariadb_data:/var/lib/mysql:Z
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=poss
+      - MYSQL_PASSWORD=poss
+      - MYSQL_DATABASE=poss
