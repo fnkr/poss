@@ -1,0 +1,1 @@
+$('#encrypted_content').text(atob($('#encrypted_content').text()));
