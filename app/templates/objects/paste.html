@@ -64,5 +64,6 @@
 {% block footer %}
 <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js', v=config['APP_VERSION']) }}"></script>
 <script src="{{ url_for('static', filename='vendor/ace/ace.min.js', v=config['APP_VERSION']) }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/aes-min.js"></script>
 <script src="{{ url_for('static', filename='js/paste.min.js', v=config['APP_VERSION']) }}"></script>
 {% endblock %}

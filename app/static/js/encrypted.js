@@ -1,1 +1,1 @@
-$('#encrypted_content').text(atob($('#encrypted_content').text()));
+$('#encrypted_content').text(CryptoJS.AES.decrypt($('#encrypted_content').text(), "My Secret Passphrase").toString(CryptoJS.enc.Utf8));
