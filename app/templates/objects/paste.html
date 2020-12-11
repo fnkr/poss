@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block content %}
-<form enctype="multipart/form-data" method="post" action="{{ url_for('objects.paste', oid=oid) }}">
+<form enctype="multipart/form-data" method="post" id="object-paste-input" action="{{ url_for('objects.paste', oid=oid) }}">
     <textarea name="paste" id="paste-input-textarea" class="form-control"></textarea>
     <pre id="paste-input-editor" class="hidden"></pre>
     <table class="table" id="paste-options">
@@ -28,7 +28,7 @@
                 </td>
                 <td>
                     <label class="checkbox">
-                        <input type="checkbox" name="encrypted"> Encrypt
+                        <input type="checkbox" id="encrypted-ckb" name="encrypted"> Encrypt
                     </label>
                 </td>
 <!--                     <td>
