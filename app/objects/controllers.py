@@ -415,7 +415,11 @@ def get(oid):
         track_view(o, request, type=('redirect' if o.type == 'link' else 'page'))
 
     if o.type == 'file':
-        if os.path.splitext(o.link)[1] in ('.jpg',
+        if o.encrypted:
+            with open(o.filepath(), 'r', encoding='utf-8') as file:
+                data = file.read()
+            return render_template('objects/type/encrypted.html', o=o, s=s, data=data)
+        elif os.path.splitext(o.link)[1] in ('.jpg',
                                            '.jpeg',
                                            '.png',
                                            '.gif'):

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ o.link }}{% endblock %}
+
+{% block navbar_left %}
+    {% include 'objects/ressources/navbar_manage_links.html' %}
+{% endblock %}
+
+{% block navbar_right %}
+    {% include 'objects/ressources/navbar_direct_link.html' %}
+    {% include 'objects/ressources/navbar_download_link.html' %}
+{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+{% block content %}
+    <div id="encrypted_content">{{ data }}</div>
+{% endblock %}
+
+{% block footer %}
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js', v=config['APP_VERSION']) }}"></script>
+    <script src="{{ url_for('static', filename='js/encrypted.js', v=config['APP_VERSION']) }}"></script>
+{% endblock %}
