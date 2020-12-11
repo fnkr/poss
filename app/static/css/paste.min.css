@@ -1,1 +1,38 @@
-#paste-input-editor{position:relative;height:500px}#paste-input-textarea{width:100%;min-height:500px;font-family:monospace}#paste-options>tbody>tr{border-top-style:hidden}#paste-options>tbody>tr>th{padding-bottom:0}#paste-options>tbody>tr>td{padding-top:0}#paste-submit{height:55px}#paste-submit-th{padding-left:0}
+#paste-input-editor {
+    position: relative;
+    height: 500px;
+}
+
+#paste-input-textarea {
+    width: 100%;
+    min-height: 500px;
+    font-family: monospace;
+}
+
+#paste-options > tbody > tr {
+    border-top-style: hidden;
+}
+
+#paste-options > tbody > tr > th {
+    padding-bottom: 0;
+}
+
+#paste-options > tbody > tr > td {
+    padding-top: 0;
+}
+
+#paste-submit {
+    height: 55px;
+}
+
+#paste-submit-th {
+    padding-left: 0;
+}
+
+.checkbox-mi {
+    margin-top: 1rem;
+   
+}
+input[type="radio"], input[type="checkbox"] {
+    margin: 0;
+}
