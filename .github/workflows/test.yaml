@@ -1,0 +1,30 @@
+on: push
+name: Test
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    services:
+      mariadb:
+        image: mariadb
+        ports:
+          - 3306
+        env:
+          MYSQL_USER: poss
+          MYSQL_PASSWORD: poss
+          MYSQL_DATABASE: poss
+          MYSQL_ROOT_PASSWORD: root
+        options: --health-cmd="mysqladmin ping" --health-interval=5s --health-timeout=2s --health-retries=3
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@master
+      - name: Install dependencies
+        run: |
+          set -e
+          pip install -r requirements.txt
+          pip install nose
+      - name: Test
+        run: |
+          set -e
+          sed s/3306/${{ job.services.mariadb.ports[3306] }}/g config.dist.py > config.py
+          nosetests --all-modules --nocapture --where tests

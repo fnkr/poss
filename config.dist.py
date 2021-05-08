@@ -17,7 +17,7 @@ PORT = 8080
 SERVER_NAME = 'localhost:8080'
 
 # Database
-SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://poss:poss@localhost/poss'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://poss:poss@127.0.0.1:3306/poss'
 SQLALCHEMY_ECHO = DEBUG
 DATABASE_CONNECT_OPTIONS = {}
 
