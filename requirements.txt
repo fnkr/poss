@@ -3,7 +3,7 @@ Flask==1.1.2
 Flask-Migrate==2.7.0
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.5.1
-Flask-WTF==0.14.3
+Flask-WTF==0.15.0
 future==0.18.2
 Jinja2==2.11.3
 pycountry==20.7.3
