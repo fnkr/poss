@@ -10,6 +10,6 @@ pycountry==20.7.3
 pygeoip==0.3.2
 Pygments==2.9.0
 PyMySQL==1.0.2
-SQLAlchemy==1.4.14
+SQLAlchemy==1.4.15
 Werkzeug==1.0.1
 WTForms==2.3.3
