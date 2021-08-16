@@ -8,7 +8,7 @@ future==0.18.2
 Jinja2==3.0.1
 pycountry==20.7.3
 pygeoip==0.3.2
-Pygments==2.9.0
+Pygments==2.10.0
 PyMySQL==1.0.2
 SQLAlchemy==1.4.22
 Werkzeug==2.0.1
