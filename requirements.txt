@@ -11,5 +11,5 @@ pygeoip==0.3.2
 Pygments==2.10.0
 PyMySQL==1.0.2
 SQLAlchemy==1.4.25
-Werkzeug==2.0.1
+Werkzeug==2.0.2
 WTForms==2.3.3
